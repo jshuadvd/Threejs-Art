@@ -1,7 +1,7 @@
 // Set scene and camera
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
-var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
@@ -14,12 +14,12 @@ camera.position.z = 10;
 camera.position.y = 0;
 
 // Point Lights
-var pointLight = new THREE.PointLight( "#A805FA", 10, 100 );
-pointLight.position.set( 0, 0, 20 );
+var pointLight = new THREE.PointLight( "#A805FA", 100, 100 );
+pointLight.position.set( 20, 0, 20 );
 scene.add(pointLight);
 
-var pointLight2 = new THREE.PointLight( "#07FAA0", 10, 100 );
-pointLight2.position.set( 0, 0, -20 );
+var pointLight2 = new THREE.PointLight( "#07FAA0", 100, 100 );
+pointLight2.position.set( -20, 0, -20 );
 scene.add(pointLight2);
 
 var quantity = 50;
@@ -30,9 +30,9 @@ for (var i = 0; i < quantity; i++) {
     if(Math.random() < 0.5){
         var geometry = new THREE.RingGeometry( 4, 40, 3 );
     }
-    else {
-        var geometry = new THREE.RingGeometry( 3, 40, 5 );
-    }
+    // else {
+    //     var geometry = new THREE.RingGeometry( 3, 40, 5 );
+    // }
 
     if(i % 7 === 0) {
         var material = new THREE.MeshPhongMaterial( { color: "#ffffff"} );
@@ -63,11 +63,11 @@ var render = function() {
 
         // Set rotation change of shapes
         shapes[i].position.z += 0.2;
-        shapes[i].rotation.z += 0.02;
-        shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.07;
-        shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.07;
+        shapes[i].rotation.z += 0;
+        shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.05;
+        shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.05;
 
-        var change = 0.5 + Math.sin(u_time * 0.05) * 0.5;
+        var change = 0.5 + Math.sin(u_time * 0.5) * 0.5;
 
         // Set wireframe & width
         if(Math.random() < change){
@@ -80,7 +80,7 @@ var render = function() {
 
         if(shapes[i].position.z > 10){
             shapes[i].position.z = -70;
-            shapes[i].rotation.z=i;
+            shapes[i].rotation.z = i;
         }
     }
 
@@ -91,7 +91,7 @@ var render = function() {
     pointLight2.position.z = Math.abs(Math.cos(u_time * 0.02) * 30);
 
     //composer.render();
-    renderer.render(scene,camera);
+    renderer.render(scene, camera);
 }
 
 render();
