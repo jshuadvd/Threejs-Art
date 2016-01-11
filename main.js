@@ -58,7 +58,30 @@ var render = function() {
     requestAnimationFrame(render);
     u_time++;
 
-    
+    for (var i = 0; i < quantity; i++) {
+        shapes[i].position.z += 0.2;
+        shapes[i].rotation.z += 0.02;
+
+
+        shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.07;
+        shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.07;
+
+        var valor = 0.5 + Math.sin(u_time * 0.05) * 0.5;
+
+        if(Math.random() < valor){
+            shapes[i].material.wireframe = true;
+            shapes[i].material.wireframeLinewidth = Math.random() * 3;
+        }
+        else {
+
+            shapes[i].material.wireframe = false;
+        }
+
+        if(shapes[i].position.z > 10){
+            shapes[i].position.z = -70;
+            shapes[i].rotation.z=i;
+        }
+    }
 
     //composer.render();
     renderer.render(scene,camera);
