@@ -13,7 +13,23 @@ document.body.appendChild(renderer.domElement);
 camera.position.z = 10;
 camera.position.y = 0;
 
-// Point Light
+// Point Lights
 var pointLight = new THREE.PointLight( "#A805FA", 10, 100 );
 pointLight.position.set( 0, 0, 20 );
 scene.add(pointLight);
+
+var pointLight2 = new THREE.PointLight( "#07FAA0", 10, 100 );
+pointLight2.position.set( 0, 0, -20 );
+scene.add(pointLight2);
+
+
+// Render function
+var render = function() {
+    requestAnimationFrame(render);
+
+
+    //composer.render();
+    renderer.render(scene,camera);
+}
+
+render();
