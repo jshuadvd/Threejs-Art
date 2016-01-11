@@ -60,6 +60,8 @@ var render = function() {
     u_time++;
 
     for (var i = 0; i < quantity; i++) {
+
+        // Set rotation change of shapes
         shapes[i].position.z += 0.2;
         shapes[i].rotation.z += 0.02;
         shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.07;
@@ -73,7 +75,6 @@ var render = function() {
             shapes[i].material.wireframeLinewidth = Math.random() * 3;
         }
         else {
-
             shapes[i].material.wireframe = false;
         }
 
