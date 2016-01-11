@@ -8,3 +8,7 @@ var renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
+
+// Move the camera
+camera.position.z = 10;
+camera.position.y = 0;
