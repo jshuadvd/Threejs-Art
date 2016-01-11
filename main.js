@@ -12,3 +12,8 @@ document.body.appendChild(renderer.domElement);
 // Move the camera
 camera.position.z = 10;
 camera.position.y = 0;
+
+// Point Light
+var pointLight = new THREE.PointLight( "#A805FA", 10, 100 );
+pointLight.position.set( 0, 0, 20 );
+scene.add(pointLight);
