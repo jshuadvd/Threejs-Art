@@ -22,11 +22,43 @@ var pointLight2 = new THREE.PointLight( "#07FAA0", 10, 100 );
 pointLight2.position.set( 0, 0, -20 );
 scene.add(pointLight2);
 
+var quantity = 50;
+var shapes = [];
+
+for (var i = 0; i < quantity; i++) {
+
+    if(Math.random() < 0.5){
+        var geometry = new THREE.RingGeometry( 4, 40, 3 );
+    }
+    else {
+        var geometry = new THREE.RingGeometry( 3, 40, 5 );
+    }
+
+    if(i % 7 === 0) {
+        var material = new THREE.MeshPhongMaterial( { color: "#ffffff"} );
+    }
+    else if(i % 2 === 0){
+        var material = new THREE.MeshPhongMaterial( { color: "#666666"} );
+    }
+    else {
+        var material = new THREE.MeshPhongMaterial( { color: "#333333"} );
+    }
+    var mesh = new THREE.Mesh(geometry,material);
+    mesh.position.z = -i * 2;
+    mesh.rotation.z = i;
+    shapes.push(mesh);
+    scene.add(mesh);
+}
+
+// Variables
+var u_time = 0;
 
 // Render function
 var render = function() {
     requestAnimationFrame(render);
+    u_time++;
 
+    
 
     //composer.render();
     renderer.render(scene,camera);
