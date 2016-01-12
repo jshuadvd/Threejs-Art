@@ -3,9 +3,10 @@ var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 
+
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
-renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
@@ -32,7 +33,8 @@ var shapes = [];
 for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
-        var geometry = new THREE.RingGeometry( 4, 40, 3, 2, 90, Math.PI * 4 );
+        var geometry = new THREE.RingGeometry( 4, 40, 3);
+        //var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
     }
     else {
       // var geometry = new THREE.RingGeometry( 1, 5, 6 );
@@ -89,7 +91,7 @@ var render = function() {
 
         // Set wireframe & width
         if(Math.random() < change){
-            shapes[i].material.wireframe = true;
+            shapes[i].material.wireframe = false;
             shapes[i].material.wireframeLinewidth = Math.random() * 3;
         }
         else {
