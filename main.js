@@ -32,11 +32,31 @@ var shapes = [];
 for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
-        var geometry = new THREE.RingGeometry( 4, 40, 3 );
+        // var geometry = new THREE.RingGeometry( 4, 40, 3 );
+        var geometry = new THREE.RingGeometry( 1, 5, 6 );
+        var material = new THREE.MeshBasicMaterial( { color: 0xffff00,
+          side: THREE.DoubleSide } );
+        var mesh = new THREE.Mesh( geometry, material );
+        scene.add( mesh );
+
     }
-    // else {
-    //     var geometry = new THREE.RingGeometry( 3, 40, 5 );
-    // }
+    else {
+      // var geometry = new THREE.RingGeometry( 1, 5, 6 );
+      // var material = new THREE.MeshBasicMaterial( { color: 0xffff00,
+      //   side: THREE.DoubleSide } );
+      // var mesh = new THREE.Mesh( geometry, material );
+      // scene.add( mesh );
+
+      // var points = [];
+      // for ( var j = 0; j < 10; j++ ) {
+      // 	points.push( new THREE.Vector3( Math.sin( j * 0.2 ) * 15 + 50, 0, ( j - 5 ) * 2 ) );
+      //
+      // }
+      // var geometry = new THREE.LatheGeometry( points );
+      // var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+      // var lathe = new THREE.Mesh( geometry, material );
+      // scene.add( lathe );
+    }
 
     if(i % 7 === 0) {
         var material = new THREE.MeshPhongMaterial( { color: "#ffffff"} );
