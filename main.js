@@ -32,13 +32,7 @@ var shapes = [];
 for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
-        // var geometry = new THREE.RingGeometry( 4, 40, 3 );
-        var geometry = new THREE.RingGeometry( 1, 5, 6 );
-        var material = new THREE.MeshBasicMaterial( { color: 0xffff00,
-          side: THREE.DoubleSide } );
-        var mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
-
+        var geometry = new THREE.RingGeometry( 4, 40, 3, 2, 90, Math.PI * 4 );
     }
     else {
       // var geometry = new THREE.RingGeometry( 1, 5, 6 );
