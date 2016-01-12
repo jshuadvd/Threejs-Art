@@ -2,7 +2,7 @@
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
-
+camera.target = new THREE.Vector3( 10, 10, 10 );
 
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
@@ -37,6 +37,7 @@ for (var i = 0; i < quantity; i++) {
         //var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
     }
     else {
+
       // var geometry = new THREE.RingGeometry( 1, 5, 6 );
       // var material = new THREE.MeshBasicMaterial( { color: 0xffff00,
       //   side: THREE.DoubleSide } );
