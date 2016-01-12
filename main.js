@@ -14,6 +14,10 @@ camera.position.z = 10;
 camera.position.y = 0;
 
 // Point Lights
+// var pointLight = new THREE.PointLight( "#00ccff", 100, 100 );
+// pointLight.position.set( 20, 0, 20 );
+// scene.add(pointLight);
+
 var pointLight = new THREE.PointLight( "#A805FA", 100, 100 );
 pointLight.position.set( 20, 0, 20 );
 scene.add(pointLight);
@@ -84,7 +88,7 @@ var render = function() {
         }
     }
 
-    // Set Point light Intensity
+    // Set Point light Intensity & Position
     pointLight.intensity = Math.abs(Math.sin(u_time * 0.2) * 2);
     pointLight2.intensity = Math.abs(Math.cos(u_time * 0.2) * 2);
     pointLight.position.z = Math.abs(Math.sin(u_time * 0.02) * 30);
