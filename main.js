@@ -11,36 +11,25 @@ renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
 // Move the camera
-camera.position.z = 50;
+camera.position.z = 0;
 camera.position.y = 0;
 
 // Point Lights
-
-var spotLight = new THREE.SpotLight( 0xffffff );
-spotLight.position.set( 100, 1000, 100 );
-
-spotLight.castShadow = true;
-
-spotLight.shadowMapWidth = 1024;
-spotLight.shadowMapHeight = 1024;
-
-spotLight.shadowCameraNear = 500;
-spotLight.shadowCameraFar = 4000;
-spotLight.shadowCameraFov = 30;
-
-scene.add( spotLight );
 
 var pointLightBlue = new THREE.PointLight( "#00ccff", 5, 100, 2 );
 pointLightBlue.position.set( -10, -40, -10 );
 scene.add(pointLightBlue);
 
+// var pointLightBlue = new THREE.PointLight( "#ffffff", 1, 0, 1 );
+// pointLightBlue.position.set( -10, 20, -10 );
+// scene.add(pointLightBlue);
 
 // var pointLightPink = new THREE.PointLight( "#EE567C", 5, 100, 10 );
 // pointLightPink.position.set( 1, 0, -5 );
 // scene.add(pointLightPink);
 
 var pointLight = new THREE.PointLight( "#A805FA", 100, 1000, 40 );
-pointLight.position.set( 50, 0, 50 );
+pointLight.position.set( 40, 0, 40 );
 scene.add(pointLight);
 
 var sphereSize = 5;
@@ -48,7 +37,7 @@ var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
 scene.add( pointLightHelper );
 
 var pointLight2 = new THREE.PointLight( "#07FAA0", 100, 1000, 30 );
-pointLight2.position.set( -50, 0, -50 );
+pointLight2.position.set( -40, 0, -40 );
 scene.add(pointLight2);
 
 var sphereSize = 5;
