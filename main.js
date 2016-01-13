@@ -37,7 +37,7 @@ pointLight2.position.set( -20, 0, -20 );
 scene.add(pointLight2);
 
 var sphereSize = 1;
-var pointLightHelper = new THREE.PointLightHelper( pointLight, pointLight2, light, pointLightBlue sphereSize );
+var pointLightHelper = new THREE.PointLightHelper( pointLight, pointLight2, light, pointLightBlue, sphereSize );
 scene.add( pointLightHelper );
 
 var quantity = 50;
