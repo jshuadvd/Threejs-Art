@@ -54,6 +54,28 @@ for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
       var geometry = new THREE.RingGeometry( 50, 50, 18);
+
+      // var geometries = [
+			// 		new THREE.IcosahedronGeometry( 20, 0 ),
+			// 		new THREE.OctahedronGeometry( 20, 0 ),
+			// 		new THREE.TetrahedronGeometry( 20, 0 ),
+			// 	];
+      //
+			// var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+			// var material = new THREE.MeshLambertMaterial( {
+			// 	color: new THREE.Color( Math.random(), Math.random() * 0.5, Math.random() ),
+			// 	blending: THREE.AdditiveBlending,
+			// 	depthTest: false,
+			// 	shading: THREE.FlatShading,
+			// 	transparent: true
+			// } );
+			// var mesh = new THREE.Mesh( geometry, material );
+			// var wireframe = mesh.clone();
+			// wireframe.material = wireframe.material.clone();
+			// wireframe.material.wireframe = true;
+			// mesh.add( wireframe );
+			// scene.add(mesh);
+
       //var geometry = new THREE.RingGeometry( 20, 150, 18);
 
         //var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
