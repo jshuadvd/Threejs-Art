@@ -4,6 +4,9 @@ var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 camera.target = new THREE.Vector3( 10, 10, 10 );
 
+// var controls = new THREE.OrbitControls( camera, renderer);
+
+
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setSize(window.innerWidth, window.innerHeight);
