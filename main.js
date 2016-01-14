@@ -2,6 +2,7 @@
 var ctx = new AudioContext();
 var audio = document.getElementById('song');
 var audioSrc = ctx.createMediaElementSource(audio);
+var analyser = ctx.createAnalyser();
 
 // Set scene and camera
 var scene = new THREE.Scene();
