@@ -1,3 +1,5 @@
+$(function(){
+
 // Add Audio context and Audio
 var ctx = new AudioContext();
 var audio = document.getElementById('song');
@@ -14,18 +16,15 @@ var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 camera.target = new THREE.Vector3( 10, 10, 10 );
 
-// Add controls
-controls = new THREE.OrbitControls( camera, renderer.domElement );
-controls.addEventListener( 'change', render );
-
-// var controls = new THREE.OrbitControls( camera, renderer);
-
-
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
+
+// Add controls
+// controls = new THREE.OrbitControls(camera, renderer );
+// controls.addEventListener( 'change', render );
 
 // Move the camera
 camera.position.z = 10;
@@ -172,8 +171,16 @@ var render = function() {
     pointLight.position.z = Math.abs(Math.sin(u_time * 0.02) * 30);
     pointLight2.position.z = Math.abs(Math.cos(u_time * 0.02) * 30);
 
+    camera.rotation.y = 90 * Math.PI / 180;
+    camera.rotation.z = frequencyData[20] * Math.PI / 180;
+    camera.rotation.x = frequencyData[100] * Math.PI / 180;
+
     //composer.render();
     renderer.render(scene, camera);
-}
 
+}
+audio.play();
 render();
+
+
+});
