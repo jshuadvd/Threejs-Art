@@ -1,3 +1,7 @@
+// Add Audio context and Audio
+var ctx = new AudioContext();
+var audio = document.getElementById('song');
+
 // Set scene and camera
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
@@ -50,6 +54,7 @@ scene.add( pointLightHelper );
 var quantity = 50;
 var shapes = [];
 
+
 for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
@@ -76,12 +81,12 @@ for (var i = 0; i < quantity; i++) {
 			// mesh.add( wireframe );
 			// scene.add(mesh);
 
-      //var geometry = new THREE.RingGeometry( 20, 150, 18);
+      // var geometry = new THREE.RingGeometry( 20, 150, 18);
 
         //var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
     }
     else {
-      //var geometry = new THREE.RingGeometry( 4, 40, 3);
+      // var geometry = new THREE.RingGeometry( 4, 40, 3);
 
 
       // var geometry = new THREE.RingGeometry( 1, 5, 6 );
