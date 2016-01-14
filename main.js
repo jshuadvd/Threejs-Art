@@ -2,7 +2,7 @@ $(function(){
 
 // Add Audio context and Audio
 var ctx = new AudioContext();
-var audio = document.getElementById('myAudio');
+var audio = document.getElementById('song');
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
@@ -171,9 +171,9 @@ var render = function() {
     pointLight.position.z = Math.abs(Math.sin(u_time * 0.02) * 30);
     pointLight2.position.z = Math.abs(Math.cos(u_time * 0.02) * 30);
 
-    camera.rotation.y = 90 * Math.PI / 180;
-    camera.rotation.z = frequencyData[20] * Math.PI / 180;
-    camera.rotation.x = frequencyData[100] * Math.PI / 180;
+    // camera.rotation.y = 90 * Math.PI / 180;
+    // camera.rotation.z = frequencyData[20] * Math.PI / 180;
+    // camera.rotation.x = frequencyData[100] * Math.PI / 180;
     console.log(frequencyData);
 
     //composer.render();
@@ -181,7 +181,7 @@ var render = function() {
 
 }
 audio.play();
-//audio.crossOrigin = "anonymous";
+// audio.crossOrigin = "anonymous";
 render();
 
 
