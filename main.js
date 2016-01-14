@@ -1,6 +1,7 @@
 // Add Audio context and Audio
 var ctx = new AudioContext();
 var audio = document.getElementById('song');
+var audioSrc = ctx.createMediaElementSource(audio);
 
 // Set scene and camera
 var scene = new THREE.Scene();
