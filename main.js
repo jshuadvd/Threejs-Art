@@ -4,11 +4,19 @@ var audio = document.getElementById('song');
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
+audioSrc.connect(analyser);
+audioSrc.connect(ctx.destination);
+var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
 // Set scene and camera
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 camera.target = new THREE.Vector3( 10, 10, 10 );
+
+// Add controls
+controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.addEventListener( 'change', render );
 
 // var controls = new THREE.OrbitControls( camera, renderer);
 
