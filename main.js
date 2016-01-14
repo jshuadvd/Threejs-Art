@@ -1,14 +1,19 @@
-$(function(){
+
 
 // Add Audio context and Audio
 var ctx = new AudioContext();
-var audio = document.getElementById('song');
+var audio = document.getElementById('player');
+audio.crossOrigin = "anonymous";
+audio.play();
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
 audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
+// frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+console.log(frequencyData);
+
 
 // Set scene and camera
 var scene = new THREE.Scene();
@@ -68,6 +73,7 @@ for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5){
       var geometry = new THREE.RingGeometry( 50, 50, 18);
+
 
       // var geometries = [
 			// 		new THREE.IcosahedronGeometry( 20, 0 ),
@@ -176,13 +182,10 @@ var render = function() {
     // camera.rotation.x = frequencyData[100] * Math.PI / 180;
     console.log(frequencyData);
 
-    //composer.render();
+
+    // composer.render();
     renderer.render(scene, camera);
 
 }
-audio.play();
-// audio.crossOrigin = "anonymous";
+
 render();
-
-
-});

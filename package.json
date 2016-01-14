@@ -1,0 +1,21 @@
+{
+  "name": "ThreejsArt",
+  "version": "1.0.0",
+  "description": "Web Art",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "engines": {
+    "node": "4.2.2"
+  },
+  "author": "Joshua David",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "nodemon": "^1.8.1",
+    "path": "^0.12.7"
+  }
+}
