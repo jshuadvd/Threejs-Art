@@ -2,9 +2,11 @@
 // Add Audio context and Audio
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
+
+audio.play();
 audio.volume = 1;
 // audio.crossOrigin = "anonymous";
-// audio.play();
+
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
@@ -28,29 +30,24 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
-// Add controls
-// controls = new THREE.OrbitControls(camera, renderer );
-// controls.addEventListener( 'change', render );
-
 // Move the camera
 camera.position.z = 10;
 camera.position.y = 0;
 
 // Point Lights
-
 var pointLightBlue = new THREE.PointLight( "#00ccff", 5, 100, 2 );
 pointLightBlue.position.set( -10, -40, -10 );
 scene.add(pointLightBlue);
 
-// var pointLightBlue = new THREE.PointLight( "#ffffff", 1, 0, 1 );
-// pointLightBlue.position.set( -10, 20, -10 );
-// scene.add(pointLightBlue);
+// var pointLightWhite = new THREE.PointLight( "#ffffff", 1, 0, 1 );
+// pointLightWhite.position.set( -10, 160, -10 );
+// scene.add(pointLightWhite);
 
 // var pointLightPink = new THREE.PointLight( "#EE567C", 5, 100, 10 );
 // pointLightPink.position.set( 1, 0, -5 );
 // scene.add(pointLightPink);
 
-var pointLight = new THREE.PointLight( "#A805FA", 100, 1000, 40 );
+var pointLight = new THREE.PointLight( "#A805FA", 2, 1000, 40 );
 pointLight.position.set( 40, 0, 40 );
 scene.add(pointLight);
 
@@ -58,7 +55,7 @@ var sphereSize = 5;
 var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
 scene.add( pointLightHelper );
 
-var pointLight2 = new THREE.PointLight( "#07FAA0", 100, 1000, 30 );
+var pointLight2 = new THREE.PointLight( "#07FAA0", 2, 1000, 30 );
 pointLight2.position.set( -40, 0, -40 );
 scene.add(pointLight2);
 
@@ -74,33 +71,14 @@ for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5) {
       var geometry = new THREE.RingGeometry( 4, 40, 3);
-      // var geometry = new THREE.RingGeometry( 50, 50, 18);
-
-
-      // var geometries = [
-			// 		new THREE.IcosahedronGeometry( 20, 0 ),
-			// 		new THREE.OctahedronGeometry( 20, 0 ),
-			// 		new THREE.TetrahedronGeometry( 20, 0 ),
-			// 	];
-      //
-			// var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
-			// var material = new THREE.MeshLambertMaterial( {
-			// 	color: new THREE.Color( Math.random(), Math.random() * 0.5, Math.random() ),
-			// 	blending: THREE.AdditiveBlending,
-			// 	depthTest: false,
-			// 	shading: THREE.FlatShading,
-			// 	transparent: true
-			// } );
-			// var mesh = new THREE.Mesh( geometry, material );
-			// var wireframe = mesh.clone();
-			// wireframe.material = wireframe.material.clone();
-			// wireframe.material.wireframe = true;
-			// mesh.add( wireframe );
-			// scene.add(mesh);
+      // var geometry = new THREE.RingGeometry( 30, 30, 18);
+      // camera.position.z = 60;
 
       // var geometry = new THREE.RingGeometry( 20, 150, 18);
 
-        //var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
+      // var geometry = new THREE.RingGeometry( 20, 150, 18);
+
+      // var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
     }
     else {
       // var geometry = new THREE.RingGeometry( 4, 40, 3);
@@ -134,8 +112,8 @@ for (var i = 0; i < quantity; i++) {
     }
 
     var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.z = -i * 2;
-    mesh.rotation.z = i;
+    mesh.position.z = -i * 3;
+    // mesh.rotation.z = i;
     shapes.push(mesh);
     scene.add(mesh);
 }
@@ -161,7 +139,7 @@ var render = function() {
         // Set wireframe & width
         if(Math.random() < change){
             shapes[i].material.wireframe = false;
-            shapes[i].material.wireframeLinewidth = Math.random() * 2;
+            shapes[i].material.wireframeLinewidth = Math.random() * 4;
         }
         else {
             shapes[i].material.wireframe = false;
@@ -188,6 +166,5 @@ var render = function() {
     // composer.render();
     renderer.render(scene, camera);
 
-}
-audio.play();
+    }
 render();
