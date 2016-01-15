@@ -1,8 +1,8 @@
 
-window.onload = function() {
 // Add Audio context and Audio
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
+audio.volume = 1;
 // audio.crossOrigin = "anonymous";
 // audio.play();
 var audioSrc = ctx.createMediaElementSource(audio);
@@ -72,8 +72,9 @@ var shapes = [];
 
 for (var i = 0; i < quantity; i++) {
 
-    if(Math.random() < 0.5){
-      var geometry = new THREE.RingGeometry( 50, 50, 18);
+    if(Math.random() < 0.5) {
+      var geometry = new THREE.RingGeometry( 4, 40, 3);
+      // var geometry = new THREE.RingGeometry( 50, 50, 18);
 
 
       // var geometries = [
@@ -190,4 +191,3 @@ var render = function() {
 }
 audio.play();
 render();
-};
