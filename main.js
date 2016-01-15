@@ -1,10 +1,10 @@
 
-
+window.onload = function() {
 // Add Audio context and Audio
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
-audio.crossOrigin = "anonymous";
-audio.play();
+// audio.crossOrigin = "anonymous";
+// audio.play();
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
@@ -12,6 +12,7 @@ audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+analyser.getByteFrequencyData(frequencyData);
 console.log(frequencyData);
 
 
@@ -158,7 +159,7 @@ var render = function() {
 
         // Set wireframe & width
         if(Math.random() < change){
-            shapes[i].material.wireframe = true;
+            shapes[i].material.wireframe = false;
             shapes[i].material.wireframeLinewidth = Math.random() * 2;
         }
         else {
@@ -180,12 +181,13 @@ var render = function() {
     // camera.rotation.y = 90 * Math.PI / 180;
     // camera.rotation.z = frequencyData[20] * Math.PI / 180;
     // camera.rotation.x = frequencyData[100] * Math.PI / 180;
-    console.log(frequencyData);
+    // console.log(frequencyData);
 
 
     // composer.render();
     renderer.render(scene, camera);
 
 }
-
+audio.play();
 render();
+};
