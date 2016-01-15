@@ -31,7 +31,7 @@ renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
 // Move the camera
-camera.position.z = 0;
+camera.position.z = 20;
 camera.position.y = 0;
 
 // Point Lights
@@ -70,8 +70,8 @@ var shapes = [];
 for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5) {
-      var geometry = new THREE.RingGeometry( 4, 40, 3);
-      // var geometry = new THREE.RingGeometry( 50, 50, 18);
+      //var geometry = new THREE.RingGeometry( 4, 40, 3);
+      var geometry = new THREE.RingGeometry( 30, 30, 18);
       // camera.position.z = 60;
 
       // var geometry = new THREE.RingGeometry( 20, 150, 18);
@@ -81,7 +81,7 @@ for (var i = 0; i < quantity; i++) {
       // var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16 );
     }
     else {
-      var geometry = new THREE.RingGeometry( 4, 40, 3);
+      // var geometry = new THREE.RingGeometry( 4, 40, 3);
 
 
       // var geometry = new THREE.RingGeometry( 1, 5, 6 );
@@ -138,7 +138,7 @@ var render = function() {
 
         // Set wireframe & width
         if(Math.random() < change){
-            shapes[i].material.wireframe = false;
+            shapes[i].material.wireframe = true;
             shapes[i].material.wireframeLinewidth = Math.random() * 4;
         }
         else {
