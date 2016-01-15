@@ -1,5 +1,6 @@
 
-// Add Audio context and Audio
+/* ==================== [ Audio Context ] ==================== */
+
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
 
@@ -12,13 +13,15 @@ var analyser = ctx.createAnalyser();
 
 audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
+
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 analyser.getByteFrequencyData(frequencyData);
 console.log(frequencyData);
 
 
-// Set scene and camera
+/* ==================== [ Set Scene & Camera ] ==================== */
+
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
@@ -30,11 +33,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
-// Move the camera
+/* ==================== [ Camera Position ] ==================== */
+
 camera.position.z = 10;
 camera.position.y = 0;
 
-// Point Lights
+/* ==================== [ Point Lights ] ==================== */
+
 var pointLightBlue = new THREE.PointLight( "#00ccff", 5, 100, 2 );
 pointLightBlue.position.set( -10, -40, -10 );
 scene.add(pointLightBlue);
@@ -62,6 +67,29 @@ scene.add(pointLight2);
 var sphereSize = 5;
 var pointLightHelper = new THREE.PointLightHelper( pointLight2, sphereSize );
 scene.add( pointLightHelper );
+
+
+/* ==================== [ Particles ] ==================== */
+
+var particleCount = 0, particleSystem, particles;
+
+particleCount = 20000,
+particles = new THREE.Geometry();
+var pMaterial = new THREE.ParticleBasicMaterial({ color: 0xFFFFFF, size: 0.5 });
+
+for (var i = 0; i < particleCount; i++) {
+    var pX = Math.random() * 500 - 250,
+        pY = Math.random() * 500 - 250,
+        pZ = Math.random() * 500 - 250,
+        particle = new THREE.Vector3(pX, pY, pZ);
+
+    particles.vertices.push(particle);
+}
+
+particleSystem = new THREE.ParticleSystem(particles, pMaterial);
+scene.add(particleSystem);
+
+/* ==================== [ Shapes ] ==================== */
 
 var quantity = 50;
 var shapes = [];
@@ -121,34 +149,35 @@ for (var i = 0; i < quantity; i++) {
 // Variables
 var u_time = 0;
 
-// Render function
+/* ==================== [ Render Function ] ==================== */
+
 var render = function() {
     requestAnimationFrame(render);
     u_time++;
 
     for (var i = 0; i < quantity; i++) {
 
-        // Set rotation change of shapes
-        shapes[i].position.z += 0.2;
-        shapes[i].rotation.z += 0;
-        shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.05;
-        shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.05;
+      // Set rotation change of shapes
+      shapes[i].position.z += 0.2;
+      shapes[i].rotation.z += 0;
+      shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.05;
+      shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.05;
 
-        var change = 1.5 + Math.sin(u_time * 0.5) * 0.5;
+      var change = 1.5 + Math.sin(u_time * 0.5) * 0.5;
 
-        // Set wireframe & width
-        if(Math.random() < change){
-            shapes[i].material.wireframe = false;
-            shapes[i].material.wireframeLinewidth = Math.random() * 4;
-        }
-        else {
-            shapes[i].material.wireframe = false;
-        }
+      // Set wireframe & width
+      if(Math.random() < change){
+          shapes[i].material.wireframe = false;
+          shapes[i].material.wireframeLinewidth = Math.random() * 4;
+      }
+      else {
+          shapes[i].material.wireframe = false;
+      }
 
-        if(shapes[i].position.z > 10){
-            shapes[i].position.z = -70;
-            shapes[i].rotation.z = i;
-        }
+      if(shapes[i].position.z > 10){
+          shapes[i].position.z = -70;
+          shapes[i].rotation.z = i;
+      }
     }
 
     // Set Point light Intensity & Position
@@ -160,11 +189,18 @@ var render = function() {
     // camera.rotation.y = 90 * Math.PI / 180;
     // camera.rotation.z = frequencyData[20] * Math.PI / 180;
     // camera.rotation.x = frequencyData[100] * Math.PI / 180;
-    // console.log(frequencyData);
+    console.log(frequencyData);
 
 
     // composer.render();
     renderer.render(scene, camera);
+
+    var pCount = particleCount;
+    while (pCount--) {
+        var particle = particles.vertices[pCount];
+        particle.y = Math.random() * 500 - 250;
+        particleSystem.geometry.vertices.needsUpdate = true;
+    }
 
     }
 render();
