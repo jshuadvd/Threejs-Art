@@ -25,7 +25,7 @@ console.log(frequencyData);
 var scene = new THREE.Scene();
 var aspectRatio = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
-camera.target = new THREE.Vector3( 10, 10, 10 );
+// camera.target = new THREE.Vector3( 10, 10, 10 );
 
 // Set the DOM
 var renderer = new THREE.WebGLRenderer({ antialias:true });
@@ -35,59 +35,127 @@ document.body.appendChild(renderer.domElement);
 
 /* ==================== [ Camera Position ] ==================== */
 
-camera.position.z = 10;
+camera.position.z = 0;
 camera.position.y = 0;
 
 /* ==================== [ Point Lights ] ==================== */
+
+// var spotLight = new THREE.SpotLight(0xffffff, .2, 1000, Math.PI/3, 0.001);
+//     spotLight.position.copy( camera.position );
+//     spotLight.position.z = 10;
+//     spotLight.position.y = 45;
+//     spotLight.position.x = 50;
+//     spotLight.castShadow = true;
+//     spotLight.shadowMapWidth = 1024;
+//     spotLight.shadowMapHeight = 1024;
+//     spotLight.shadowCameraNear = 1;
+//     spotLight.shadowCameraFar = 1000;
+//     camera.add(spotLight);
+//     scene.add(camera);
 
 var pointLightBlue = new THREE.PointLight( "#00ccff", 5, 100, 2 );
 pointLightBlue.position.set( -10, -40, -10 );
 scene.add(pointLightBlue);
 
 // var pointLightWhite = new THREE.PointLight( "#ffffff", 1, 0, 1 );
-// pointLightWhite.position.set( -10, 160, -10 );
+// // pointLightWhite.position.set( -10, 160, -10 );
+// pointLightWhite.position.set( 0, 0, 1 );
 // scene.add(pointLightWhite);
+// camera.add(pointLightWhite);
 
 // var pointLightPink = new THREE.PointLight( "#EE567C", 5, 100, 10 );
 // pointLightPink.position.set( 1, 0, -5 );
 // scene.add(pointLightPink);
 
-var pointLight = new THREE.PointLight( "#A805FA", 2, 1000, 40 );
-pointLight.position.set( 40, 0, 40 );
+var pointLight = new THREE.PointLight( "#A805FA", 5, 1000, 40 );
+pointLight.position.set( 20, 0, 40 );
 scene.add(pointLight);
 
-var sphereSize = 5;
-var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-scene.add( pointLightHelper );
+// var sphereSize = 5;
+// var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+// scene.add( pointLightHelper );
 
-var pointLight2 = new THREE.PointLight( "#07FAA0", 2, 1000, 30 );
-pointLight2.position.set( -40, 0, -40 );
+var pointLight2 = new THREE.PointLight( "#07FAA0", 5, 1000, 30 );
+pointLight2.position.set( -20, 0, -40 );
 scene.add(pointLight2);
 
-var sphereSize = 5;
-var pointLightHelper = new THREE.PointLightHelper( pointLight2, sphereSize );
-scene.add( pointLightHelper );
+// var sphereSize = 5;
+// var pointLightHelper = new THREE.PointLightHelper( pointLight2, sphereSize );
+// scene.add( pointLightHelper );
 
 
 /* ==================== [ Particles ] ==================== */
 
-var particleCount = 0, particleSystem, particles;
+// var texture = new Image();
+// texture.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/82015/snowflake.png';
 
-particleCount = 20000,
-particles = new THREE.Geometry();
-var pMaterial = new THREE.ParticleBasicMaterial({ color: 0xFFFFFF, size: 0.5 });
+// var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(texture) } );
 
-for (var i = 0; i < particleCount; i++) {
-    var pX = Math.random() * 500 - 250,
-        pY = Math.random() * 500 - 250,
-        pZ = Math.random() * 500 - 250,
-        particle = new THREE.Vector3(pX, pY, pZ);
+// var particleCount = 0, particleSystem, particles;
+// var texture = THREE.ImageUtils.loadTexture('images/particle.png');
 
-    particles.vertices.push(particle);
-}
 
-particleSystem = new THREE.ParticleSystem(particles, pMaterial);
-scene.add(particleSystem);
+// particleCount = 20000,
+// particles = new THREE.Geometry();
+// var pMaterial = new THREE.ParticleBasicMaterial({
+//   color: 0xFFFFFF,
+//   size: 0.5
+//  });
+//
+// for (var i = 0; i < particleCount; i++) {
+//     var pX = Math.random() * 500 - 250,
+//         pY = Math.random() * 500 - 250,
+//         pZ = Math.random() * 500 - 250,
+//         particle = new THREE.Vector3(pX, pY, pZ);
+//
+//     particles.vertices.push(particle);
+// }
+//
+// particleSystem = new THREE.ParticleSystem(particles, pMaterial);
+// scene.add(particleSystem);
+
+// var particle = new THREE.Geometry();
+// var texture = THREE.ImageUtils.loadTexture("images/particle.png");
+// var pMaterial = new THREE.PointsMaterial({
+//     size: 100,
+//     map: texture,
+//     blending: THREE.AdditiveBlending,
+//     depthTest: !1,
+//     transparent: !0,
+//     opacity: 1
+// })
+//
+//     pMaterial.particleHue = Math.random(),
+//     pMaterial.color = new THREE.Color(16777215),
+//     pMaterial.color.setHSL(pMaterial.particleHue, 1, 1);
+//
+//
+//
+// var particles = new THREE.Points(particle, pMaterial);
+//     particles.position.z = -500;
+//     particles.sortParticles = !1;
+//     scene.add(particles);
+
+/* ==================== [ Post Processing ] ==================== */
+
+  // var composer = new THREE.EffectComposer( renderer );
+  // composer.addPass( new THREE.RenderPass( scene, camera ) );
+  //
+  // var effect = new THREE.ShaderPass( THREE.DotScreenShader );
+  // effect.uniforms[ 'scale' ].value = 300;
+  // composer.addPass( effect );
+  //
+  // var effect = new THREE.ShaderPass( THREE.RGBShiftShader );
+  // effect.uniforms[ 'amount' ].value = 10.01;
+  // effect.renderToScreen = true;
+  //
+  // composer.addPass( effect );
+  // composer.addPass( effect );
+  //
+  // var glitch = new THREE.GlitchPass(900);
+  // glitch.renderToScreen = true;
+  // composer.addPass(glitch);
+
 
 /* ==================== [ Shapes ] ==================== */
 
@@ -162,13 +230,15 @@ var render = function() {
       shapes[i].rotation.z += 0;
       shapes[i].scale.x = 1 + Math.sin(i + u_time * 0.1) * 0.05;
       shapes[i].scale.y = 1 + Math.sin(i + u_time * 0.1) * 0.05;
+      // shapes[i].scale.y = 120 + Math.tan(i + u_time * 5.0) * 0.5;
+      // shapes[i].scale.x = 120 + Math.tan(i + u_time * 5.0) * 0.5;
 
       var change = 1.5 + Math.sin(u_time * 0.5) * 0.5;
 
       // Set wireframe & width
       if(Math.random() < change){
           shapes[i].material.wireframe = false;
-          shapes[i].material.wireframeLinewidth = Math.random() * 4;
+          shapes[i].material.wireframeLinewidth = Math.random() * 2;
       }
       else {
           shapes[i].material.wireframe = false;
@@ -189,18 +259,22 @@ var render = function() {
     // camera.rotation.y = 90 * Math.PI / 180;
     // camera.rotation.z = frequencyData[20] * Math.PI / 180;
     // camera.rotation.x = frequencyData[100] * Math.PI / 180;
-    console.log(frequencyData);
+    // console.log(frequencyData);
 
 
     // composer.render();
+
+
     renderer.render(scene, camera);
 
-    var pCount = particleCount;
-    while (pCount--) {
-        var particle = particles.vertices[pCount];
-        particle.y = Math.random() * 500 - 250;
-        particleSystem.geometry.vertices.needsUpdate = true;
-    }
+    // var pCount = particleCount;
+    //   while (pCount--) {
+    //       var particle = particles.vertices[pCount];
+    //       particle.y = Math.random() * 500 - 250;
+    //       particleSystem.geometry.vertices.needsUpdate = true;
+    //   }
+    //   particleSystem.rotation.y += 0.001;
+    //   particleSystem.rotation.z += 0.005;
 
     }
 render();
