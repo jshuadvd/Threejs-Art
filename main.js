@@ -193,9 +193,23 @@ composer.addPass(effect);
 var glitch = new THREE.GlitchPass(100);
 composer.addPass(glitch);
 
+var tv = new THREE.ShaderPass( THREE.BadTVShader );
+tv.uniforms[ "distortion" ].value = 1;
+tv.uniforms[ "distortion2" ].value = .01;
+// tv.uniforms[ "time" ].value = 1.5;
+tv.uniforms[ "speed" ].value = 8.8;
+tv.uniforms[ "rollSpeed" ].value = 0.8;
+composer.addPass(tv);
+
+// var staticPass = new THREE.ShaderPass( THREE.StaticShader );
+// staticPass.uniforms[ "amount" ].value = 0.15;
+// staticPass.uniforms[ "size" ].value = 1.0;
+// staticPass.uniforms[ "time" ].value = 4.5;
+// composer.addPass(staticPass);
+
 
 var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
-effect1.uniforms['amount'].value = 0.003;
+effect1.uniforms['amount'].value = 0.005;
 effect1.renderToScreen = true;
 composer.addPass(effect1);
 
