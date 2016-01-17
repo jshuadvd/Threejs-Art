@@ -161,6 +161,26 @@ scene.add(pointLight2);
   // glitch.renderToScreen = true;
   // composer.addPass(glitch);
 
+  composer = new THREE.EffectComposer(renderer);
+  composer.addPass(new THREE.RenderPass(scene, camera));
+
+  effect = new THREE.ShaderPass(THREE.FilmShader);
+  effect.uniforms['time'].value = 0.0;
+  effect.uniforms['nIntensity'].value = guiControls.nIntensity;
+  effect.uniforms['sIntensity'].value = guiControls.sIntensity;
+  effect.uniforms['sCount'].value = guiControls.sCount;
+  effect.uniforms['grayscale'].value = guiControls.grayscale;
+
+  composer.addPass(effect);
+
+  var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
+  effect1.uniforms['amount'].value = 0.0015;
+  effect1.renderToScreen = true;
+  composer.addPass(effect1);
+
+  // add a timer
+  clock = new THREE.Clock;
+
 
 /* ==================== [ Shapes ] ==================== */
 
