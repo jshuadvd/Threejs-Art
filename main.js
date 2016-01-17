@@ -172,7 +172,6 @@ effect.uniforms['nIntensity'].value = 0.4;
 effect.uniforms['sIntensity'].value = 0.9;
 effect.uniforms['sCount'].value = 800;
 effect.uniforms['grayscale'].value = 0.6;
-
 composer.addPass(effect);
 
 // var dot = new THREE.ShaderPass( THREE.DotScreenShader );
@@ -187,6 +186,13 @@ composer.addPass(effect);
 // kaleidoPass.uniforms['angle'].value = 45 * Math.PI / 180;
 //
 // composer.addPass(kaleidoPass);
+
+// var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
+// composer.addPass(mirror);
+
+var glitch = new THREE.GlitchPass(100);
+composer.addPass(glitch);
+
 
 var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
 effect1.uniforms['amount'].value = 0.003;
