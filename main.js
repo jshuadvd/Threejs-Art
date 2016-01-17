@@ -1,3 +1,11 @@
+/* ==================== [ Global Variables ] ==================== */
+
+var scene,
+    camera,
+    renderer,
+    aspectRatio,
+    composer;
+
 
 /* ==================== [ Audio Context ] ==================== */
 
@@ -22,20 +30,20 @@ console.log(frequencyData);
 
 /* ==================== [ Set Scene & Camera ] ==================== */
 
-var scene = new THREE.Scene();
-var aspectRatio = window.innerWidth / window.innerHeight;
-var camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
+scene = new THREE.Scene();
+aspectRatio = window.innerWidth / window.innerHeight;
+camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 // camera.target = new THREE.Vector3( 10, 10, 10 );
 
 // Set the DOM
-var renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
 /* ==================== [ Camera Position ] ==================== */
 
-camera.position.z = 0;
+camera.position.z = 10;
 camera.position.y = 0;
 
 /* ==================== [ Point Lights ] ==================== */
@@ -67,16 +75,16 @@ scene.add(pointLightBlue);
 // pointLightPink.position.set( 1, 0, -5 );
 // scene.add(pointLightPink);
 
-var pointLight = new THREE.PointLight( "#A805FA", 5, 1000, 40 );
-pointLight.position.set( 20, 0, 40 );
+var pointLight = new THREE.PointLight( "#A805FA", 2, 100, 40 );
+pointLight.position.set( 40, 0, 40 );
 scene.add(pointLight);
 
 // var sphereSize = 5;
 // var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
 // scene.add( pointLightHelper );
 
-var pointLight2 = new THREE.PointLight( "#07FAA0", 5, 1000, 30 );
-pointLight2.position.set( -20, 0, -40 );
+var pointLight2 = new THREE.PointLight( "#07FAA0", 2, 100, 30 );
+pointLight2.position.set( -40, 0, -40 );
 scene.add(pointLight2);
 
 // var sphereSize = 5;
@@ -142,24 +150,24 @@ scene.add(pointLight2);
   // composer.addPass( new THREE.RenderPass( scene, camera ) );
   //
   // var effect = new THREE.ShaderPass( THREE.DotScreenShader );
-  // effect.uniforms[ 'scale' ].value = 300;
+  // effect.uniforms[ 'scale' ].value = 30;
   // composer.addPass( effect );
   //
   // var effect = new THREE.ShaderPass( THREE.RGBShiftShader );
-  // effect.uniforms[ 'amount' ].value = 10.01;
+  // effect.uniforms[ 'amount' ].value = 0.01;
   // effect.renderToScreen = true;
   //
   // composer.addPass( effect );
   // composer.addPass( effect );
   //
-  // var glitch = new THREE.GlitchPass(900);
+  // var glitch = new THREE.GlitchPass(100);
   // glitch.renderToScreen = true;
   // composer.addPass(glitch);
 
 
 /* ==================== [ Shapes ] ==================== */
 
-var quantity = 50;
+var quantity = 40;
 var shapes = [];
 
 
@@ -167,6 +175,7 @@ for (var i = 0; i < quantity; i++) {
 
     if(Math.random() < 0.5) {
       var geometry = new THREE.RingGeometry( 4, 40, 3);
+
       // var geometry = new THREE.RingGeometry( 30, 30, 18);
       // camera.position.z = 60;
 
@@ -221,6 +230,8 @@ var u_time = 0;
 
 var render = function() {
     requestAnimationFrame(render);
+    var timer = Date.now() * 0.0010;
+    camera.lookAt( scene.position );
     u_time++;
 
     for (var i = 0; i < quantity; i++) {
@@ -263,8 +274,6 @@ var render = function() {
 
 
     // composer.render();
-
-
     renderer.render(scene, camera);
 
     // var pCount = particleCount;
