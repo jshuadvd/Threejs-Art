@@ -1,10 +1,7 @@
 /* ==================== [ Global Variables ] ==================== */
 
-var scene,
-    camera,
-    renderer,
-    aspectRatio,
-    composer;
+var scene, camera, renderer, aspectRatio;
+var composer, effect;
 
 
 /* ==================== [ Audio Context ] ==================== */
