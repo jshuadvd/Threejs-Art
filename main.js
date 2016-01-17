@@ -252,6 +252,19 @@ for (var i = 0; i < quantity; i++) {
 	scene.add(mesh);
 }
 
+
+function refRate() {
+
+  curTime = Date.now();
+  delta = curTime - oldTime;
+
+  if (delta > interval) {
+    oldTime = curTime - (delta % interval);
+    updateSize();
+  }
+
+}
+
 // Variables
 var u_time = 0;
 
@@ -259,8 +272,8 @@ var u_time = 0;
 
 var render = function () {
 	requestAnimationFrame(render);
-	var timer = Date.now() * 0.0010;
-	camera.lookAt(scene.position);
+	// var timer = Date.now() * 0.0010;
+	// camera.lookAt(scene.position);
 	u_time++;
 
 	for (var i = 0; i < quantity; i++) {
@@ -301,8 +314,9 @@ var render = function () {
 	// console.log(frequencyData);
 
 
-	// composer.render();
+
 	renderer.render(scene, camera);
+  composer.render();
 
 	// var pCount = particleCount;
 	//   while (pCount--) {
@@ -314,4 +328,5 @@ var render = function () {
 	//   particleSystem.rotation.z += 0.005;
 
 }
+stats.update();
 render();
