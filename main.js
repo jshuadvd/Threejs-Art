@@ -175,8 +175,12 @@ effect.uniforms['grayscale'].value = 0.6;
 
 composer.addPass(effect);
 
+// var kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
+//
+// composer.addPass(kaleidoPass);
+
 var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
-effect1.uniforms['amount'].value = 0.0015;
+effect1.uniforms['amount'].value = 0.003;
 effect1.renderToScreen = true;
 composer.addPass(effect1);
 
