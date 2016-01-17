@@ -175,7 +175,16 @@ effect.uniforms['grayscale'].value = 0.6;
 
 composer.addPass(effect);
 
-// var kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
+// var dot = new THREE.ShaderPass( THREE.DotScreenShader );
+// dot.uniforms[ 'scale' ].value = 400;
+// dot.uniforms[ 'tDiffuse' ].value = 40;
+// dot.uniforms[ 'tSize' ].value = new THREE.Vector2( 256, 256 );
+//
+// composer.addPass(dot);
+
+// var kaleidoPass = new THREE.ShaderPass(THREE.KaleidoShader);
+// kaleidoPass.uniforms['sides'].value = 6;
+// kaleidoPass.uniforms['angle'].value = 45 * Math.PI / 180;
 //
 // composer.addPass(kaleidoPass);
 
