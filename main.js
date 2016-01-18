@@ -43,7 +43,7 @@ document.body.appendChild(renderer.domElement);
 
 /* ==================== [ Camera Position ] ==================== */
 
-camera.position.z = 100;
+camera.position.z = 10;
 camera.position.y = 0;
 
 /* ==================== [ Point Lights ] ==================== */
@@ -81,92 +81,13 @@ scene.add(pointLight2);
 
 /* ==================== [ Particles ] ==================== */
 
-var getCamera = function(){return camera;}
-
-// var starTexture;
-//
-// // instantiate a loader
-// var loader = new THREE.ImageLoader();
-//
-// // load a image resource
-// loader.load(
-//     // resource URL
-//     'images/dot.png',
-//
-//     // Function when resource is loaded
-//     function ( image ) {
-//         // here you are guaranteed that the texture has downloaded so you can do something with it.
-//         starTexture = new THREE.PointCloudMaterial( {
-// 					size: 2,
-// 					map: starTexture,
-// 					blending: THREE.AdditiveBlending,
-// 					depthTest: false,
-// 					depthWrite: false,
-// 					transparent: true,
-// 					opacity: 0.3,
-// 					side: THREE.DoubleSide,
-// 					color: 0xFFFFFF
-// 				} );
-// 				// starTexture.map.minFilter = THREE.LinearFilter;
-// 				starTexture.particleHue = Math.random();
-// 				starTexture.color = new THREE.Color(0xffffff);
-// 				starTexture.color.setHSL(material.particleHue, 1.0, 1.0);
-// } );
-
-
-// var starTexture = THREE.ImageUtils.loadTexture("images/dot.png");
-//
-// var starCount = 1800;
-// var starGeometry;
-// var material;
-// var group;
-// var particles;
-//
-// group = new THREE.Object3D();
-// scene.add(group);
-//
-// // init Particles
-// starGeometry = new THREE.Geometry();
-//
-// // create one shared material
-// material = new THREE.PointCloudMaterial({
-// 	size: 2,
-// 	map: starTexture,
-// 	blending: THREE.AdditiveBlending,
-// 	depthTest: false,
-// 	depthWrite: false,
-// 	transparent: true,
-// 	opacity: 0.3,
-// 	side: THREE.DoubleSide,
-// 	color: 0xFFFFFF
-// });
-// material.map.minFilter = THREE.LinearFilter;
-// material.particleHue = Math.random();
-// material.color = new THREE.Color(0xffffff);
-// material.color.setHSL(material.particleHue, 1.0, 1.0);
-//
-// //create particles
-// var spread =  600;
-// for (i = 0; i < starCount; i++) {
-//
-// 	var posn = new THREE.Vector3(ATUtil.randomRange(-spread,spread),
-// 									ATUtil.randomRange(-spread,spread),
-// 									ATUtil.randomRange(0,1000));
-// 	starGeometry.vertices.push(posn);
-// 	posn.origZ = posn.z;
-//
-// }
-//
-// // init particle systemvizParams.opacity;
-// particles = new THREE.PointCloud(starGeometry, material);
-// particles.sortParticles = false;
-// particles.frustumCulled = false;
-// group.add(particles);
-
+var getCamera = function() {
+	return camera;
+}
 
 var texture = new Image();
 // texture.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/82015/snowflake.png';
-texture.src = './images/particle.png';
+// texture.src = './images/particle.png';
 
 //var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(texture) } );
 
@@ -176,7 +97,7 @@ var texture = THREE.ImageUtils.loadTexture('https://uberviz.io/viz/splice/res/im
 console.log(texture);
 
 
-particleCount = 20000,
+particleCount = 1800,
 particles = new THREE.Geometry();
 var pMaterial = new THREE.PointCloudMaterial({
   color: 0xFFFFFF,
@@ -279,11 +200,11 @@ clock = new THREE.Clock;
 
 /* ==================== [ Stats ] ==================== */
 
-stats = new Stats();
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
-document.body.appendChild(stats.domElement);
+// stats = new Stats();
+// stats.domElement.style.position = 'absolute';
+// stats.domElement.style.left = '0px';
+// stats.domElement.style.top = '0px';
+// document.body.appendChild(stats.domElement);
 
 /* ==================== [ Shapes ] ==================== */
 
@@ -411,8 +332,6 @@ var render = function () {
 	renderer.render(scene, camera);
   composer.render();
 
-	// // if stars go behind camera re-add to front
-	//
 	// var camz = getCamera().position.z;
 	//
 	// for (i = 0; i < starCount; i++) {
@@ -438,13 +357,15 @@ var render = function () {
 
 	var pCount = particleCount;
 	  while (pCount--) {
-	      var particle = particles.vertices[pCount];
-	      particle.y = Math.random() * 500 - 250;
-	      particleSystem.geometry.vertices.needsUpdate = true;
+			var camz = getCamera().position.z;
+      var particle = particles.vertices[pCount];
+      particle.y = Math.random() * 500 - 250;
+			//particleSystem.vertices[i].z = camz  +  Math.random()*600 + 200 ;
+      particleSystem.geometry.vertices.needsUpdate = true;
 	  }
 	  particleSystem.rotation.y += -0.001;
 	  particleSystem.rotation.z += 0.005;
 
 }
-stats.update();
+// stats.update();
 render();
