@@ -29,6 +29,7 @@ console.log(frequencyData);
 /* ==================== [ Set Scene & Camera ] ==================== */
 
 scene = new THREE.Scene();
+// scene.fog = new THREE.Fog(0x000000, 0, 1200);
 aspectRatio = window.innerWidth / window.innerHeight;
 camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 100);
 // camera.target = new THREE.Vector3( 10, 10, 10 );
@@ -97,7 +98,7 @@ var texture = THREE.ImageUtils.loadTexture('https://uberviz.io/viz/splice/res/im
 console.log(texture);
 
 
-particleCount = 1800,
+particleCount = 20000,
 particles = new THREE.Geometry();
 var pMaterial = new THREE.PointCloudMaterial({
   color: 0xFFFFFF,
@@ -126,6 +127,73 @@ particleSystem = new THREE.ParticleSystem(particles, pMaterial);
 particleSystem.sortParticles = false;
 particleSystem.frustumCulled = false;
 scene.add(particleSystem);
+
+
+/* ==================== [ Mini Geometries ] ==================== */
+
+var hue;
+var color;
+var group;
+var materialGlow;
+var mesh;
+var mesh2;
+var glow;
+var glowMaterial;
+
+THREE.ImageUtils.crossOrigin = '';
+var glowTexture = THREE.ImageUtils.loadTexture("https://uberviz.io/viz/splice/res/img/particle.png");
+
+var boxSize = 5;
+var clipBoxGeom1 = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+var clipBoxGeom2 = new THREE.TetrahedronGeometry(boxSize);
+
+materialGlow = new THREE.MeshBasicMaterial({
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  depthTest: false,
+  transparent: true,
+  opacity: 0.3 //0.15
+});
+
+mesh = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
+mesh2 = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
+scene.add(mesh);
+scene.add(mesh2);
+
+//randomly rotate and offset sub-meshes
+mesh.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
+mesh.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
+
+mesh2.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
+mesh2.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
+mesh2.rotation.z = ATUtil.randomRange(0, Math.PI * 2);
+
+mesh2Offset = 2;
+mesh2.position.x = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+mesh2.position.y = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+mesh2.position.z = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+
+//create one glow texture per clipbox
+//since we need to switch out colors
+glowMaterial = new THREE.SpriteMaterial({
+  map: glowTexture,
+  opacity: 0.05,
+  blending: THREE.AdditiveBlending,
+  fog: true,
+});
+
+
+glow = new THREE.Sprite(glowMaterial);
+var scl = 40;
+glow.scale.set(scl, scl, scl);
+scene.add(glow);
+
+mesh.scale.set(1, 1, 1);
+mesh2.scale.set(1, 1, 1);
+glow.scale.set(40, 40, 40);
+materialGlow.opacity = 0.15;
+glowMaterial.opacity = 0.05;
+
 
 /* ==================== [ Post Processing ] ==================== */
 
@@ -162,6 +230,22 @@ glitch.uniforms[ 'seed' ].value = Math.random() * 5;
 glitch.uniforms[ 'byp' ].value = 0;
 // glitch.goWild = true;
 composer.addPass(glitch);
+
+var superPass = new THREE.ShaderPass(THREE.SuperShader);
+superPass.uniforms.vigDarkness.value = 1;
+superPass.uniforms.vigOffset.value =  1.3;
+superPass.uniforms.glowSize.value = 2;
+superPass.uniforms.glowAmount.value = 1;
+composer.addPass( superPass );
+
+// var shaderTime = 0;
+// var shakePass = new THREE.ShaderPass( THREE.ShakeShader );
+// shakePass.uniforms.time.value =  shaderTime/10;
+// shakePass.uniforms.amount.value = Math.pow(2 ,8) * 0.5;
+// composer.addPass( shakePass );
+
+// var FXAAPass = new THREE.ShaderPass( THREE.FXAAShader );
+// composer.addPass( FXAAPass );
 
 var tv = new THREE.ShaderPass( THREE.BadTVShader );
 tv.uniforms[ "distortion" ].value = 1;
