@@ -11,19 +11,34 @@
 <body>
 <audio id="player" src="./Galantis-Runaway(U & I).mp3" autoplay="true" preload autobuffer></audio>
 
+
+<!-- /* ==================== [ Libs ] ==================== */ -->
+
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="./js/libs/minivents.min.js"></script>
+<script src="./js/libs/SimplexNoise.js"></script>
+<script src="./js/libs/atutil.js"></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/libs/stats.min.js'></script>
-<script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.js'></script>
+
+<!-- /* ==================== [ Shaders ] ==================== */ -->
+
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/CopyShader.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/FilmShader.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/MirrorShader.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/KaleidoShader.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/DotScreenShader.js'></script>
 <script src='./js/shaders/BadTVShader.js'></script>
+<script src='./js/shaders/RipplesShader.js'></script>
 <script src='./js/shaders/StaticShader.js'></script>
+<script src='./js/shaders/OtherShaders.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/DigitalGlitch.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/shaders/RGBShiftShader.js'></script>
+
+
+<!-- /* ==================== [ Post Processing ] ==================== */ -->
+
+
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/postprocessing/EffectComposer.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/postprocessing/RenderPass.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/postprocessing/MaskPass.js'></script>
@@ -32,8 +47,15 @@
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/postprocessing/GlitchPass.js'></script>
 <script src='https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/postprocessing/DotScreenPass.js'></script>
 
-<script type="text/javascript" src="main.js"></script>
 
+<!-- /* ==================== [ Src ] ==================== */ -->
+
+<script type="text/javascript" src="main.js"></script>
+<!-- <script src='./js/src/AudioHandler.js'></script> -->
+<!-- <script src='./js/src/LightLeak.js'></script> -->
+<!-- <script src='./js/src/Stars.js'></script>
+<script src='./js/src/SpliceMain.js'></script>
+<script src='./js/src/SpliceViz.js'></script> -->
 
 <!-- <script type="text/javascript" src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script> -->
 <!-- <script src="https://cdn.rawgit.com/zz85/zz85-bookmarklets/master/js/ThreeInspector.js"></script> -->
