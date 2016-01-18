@@ -44,7 +44,7 @@ document.body.appendChild(renderer.domElement);
 
 /* ==================== [ Camera Position ] ==================== */
 
-camera.position.z = 10;
+camera.position.z = 15;
 camera.position.y = 0;
 
 /* ==================== [ Point Lights ] ==================== */
@@ -129,71 +129,152 @@ particleSystem.frustumCulled = false;
 scene.add(particleSystem);
 
 
-/* ==================== [ Mini Geometries ] ==================== */
+/* ==================== [ Light Beams ] ==================== */
 
-var hue;
-var color;
-var group;
-var materialGlow;
-var mesh;
-var mesh2;
-var glow;
-var glowMaterial;
+var BEAM_ROT_SPEED = 0.003;
+var BEAM_COUNT = 360;
+var beamGeometry = new THREE.PlaneGeometry(1, 500, 10, 1);
+beamGroup = new THREE.Object3D();
+beamMaterial = new THREE.MeshBasicMaterial({
+	opacity: 0.02,
+	transparent: true
+});
 
+for (var i = 0; i <= BEAM_COUNT; ++i) {
+	beam = new THREE.Mesh(beamGeometry, beamMaterial);
+	beam.doubleSided = true;
+	beam.rotation.x = Math.random() * Math.PI;
+	beam.rotation.y = Math.random() * Math.PI;
+	beam.rotation.z = Math.random() * Math.PI;
+	beamGroup.add(beam);
+}
+scene.add(beamGroup);
+
+/* ==================== [ Cubes ] ==================== */
+
+var cubesize = 100;
+var BOX_COUNT
+var geometry = new THREE.CubeGeometry(cubesize, cubesize, cubesize);
+cubeHolder = new THREE.Object3D();
 THREE.ImageUtils.crossOrigin = '';
-var glowTexture = THREE.ImageUtils.loadTexture("https://uberviz.io/viz/splice/res/img/particle.png");
-
-var boxSize = 5;
-var clipBoxGeom1 = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
-var clipBoxGeom2 = new THREE.TetrahedronGeometry(boxSize);
-
-materialGlow = new THREE.MeshBasicMaterial({
-  blending: THREE.AdditiveBlending,
-  depthWrite: false,
-  depthTest: false,
-  transparent: true,
-  opacity: 0.3 //0.15
+imgTextureStripes = THREE.ImageUtils.loadTexture( "https://uberviz.io/viz/pareidolia/img/stripes2.jpg" );
+cubeMaterial  = new THREE.MeshPhongMaterial( {
+	ambient: 0x111111,
+	color: 0x666666,
+	specular: 0x999999,
+	shininess: 30,
+	shading: THREE.FlatShading ,
+	map:imgTextureStripes
 });
+for(i = 0; i < BOX_COUNT; i++) {
+	var box = new Box();
+	boxes.push(box);
+	var cube = new THREE.Mesh(geometry,cubeMaterial );
+	cube.position = box.posn;
+	cube.rotation = box.rotation;
+	cube.ox = cube.scale.x = Math.random() * 1 + 1;
+	cube.oy = cube.scale.y = Math.random() * 1 + 1;
+	cube.oz = cube.scale.z = Math.random() * 1 + 1;
+	cubeHolder.add(cube);
+}
+scene.add(cubeHolder);
 
-mesh = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
-mesh2 = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
-scene.add(mesh);
-scene.add(mesh2);
+	/* ==================== [ Mini Geometries ] ==================== */
 
-//randomly rotate and offset sub-meshes
-mesh.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
-mesh.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
-
-mesh2.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
-mesh2.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
-mesh2.rotation.z = ATUtil.randomRange(0, Math.PI * 2);
-
-mesh2Offset = 2;
-mesh2.position.x = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
-mesh2.position.y = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
-mesh2.position.z = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
-
-//create one glow texture per clipbox
-//since we need to switch out colors
-glowMaterial = new THREE.SpriteMaterial({
-  map: glowTexture,
-  opacity: 0.05,
-  blending: THREE.AdditiveBlending,
-  fog: true,
-});
-
-
-glow = new THREE.Sprite(glowMaterial);
-var scl = 40;
-glow.scale.set(scl, scl, scl);
-scene.add(glow);
-
-mesh.scale.set(1, 1, 1);
-mesh2.scale.set(1, 1, 1);
-glow.scale.set(40, 40, 40);
-materialGlow.opacity = 0.15;
-glowMaterial.opacity = 0.05;
-
+//
+//     //var group;
+//     var BOX_COUNT = 100;
+//     var pool = []; //pool for 3D ClipBox objects
+//     var clips = []; // clip data objects
+//     var clipCount;
+//     var nextClipIndex = 0;
+//
+//     //create a pool of reusable clipBoxes
+//     for (i = 0; i < BOX_COUNT; i++) {
+//         var clipBox = new ClipBox();
+//         clipBox--;
+//         pool.push(clipBox);
+//     }
+//
+//     clipCount = clips.length;
+//     //sort clips by start time
+//     clips.sort(function(a, b) {
+//         return a.start - b.start;
+//     });
+//     nextClipIndex = 0;
+//     //populate first 100 boxes
+//
+//
+// function ClipBox() {
+//
+// var composer = new THREE.EffectComposer(renderer);
+// composer.addPass(new THREE.RenderPass(scene, camera));
+//
+// var hue;
+// var color;
+// var group;
+// var materialGlow;
+// var mesh1;
+// var mesh2;
+// var glow;
+// var glowMaterial;
+//
+// THREE.ImageUtils.crossOrigin = '';
+// var glowTexture = THREE.ImageUtils.loadTexture("https://uberviz.io/viz/splice/res/img/particle.png");
+//
+// var boxSize = 2;
+// var clipBoxGeom1 = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+// var clipBoxGeom2 = new THREE.TetrahedronGeometry(boxSize);
+//
+// materialGlow = new THREE.MeshBasicMaterial({
+//   blending: THREE.AdditiveBlending,
+//   depthWrite: false,
+//   depthTest: false,
+//   transparent: true,
+//   opacity: 0.3 //0.15
+// });
+//
+// mesh1 = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
+// mesh2 = new THREE.Mesh(Math.random() < 0.5 ? clipBoxGeom1 : clipBoxGeom2, material);
+// scene.add(mesh);
+// scene.add(mesh2);
+//
+// //randomly rotate and offset sub-meshes
+// // mesh.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
+// // mesh.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
+// //
+// // mesh2.rotation.x = ATUtil.randomRange(0, Math.PI * 2);
+// // mesh2.rotation.y = ATUtil.randomRange(0, Math.PI * 2);
+// // mesh2.rotation.z = ATUtil.randomRange(0, Math.PI * 2);
+// //
+// // mesh2Offset = 2;
+// // mesh2.position.x = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+// // mesh2.position.y = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+// // mesh2.position.z = ATUtil.randomRange(-mesh2Offset, mesh2Offset);
+//
+// //create one glow texture per box
+// glowMaterial = new THREE.SpriteMaterial({
+//   map: glowTexture,
+//   opacity: 0.05,
+//   blending: THREE.AdditiveBlending,
+//   fog: true,
+// });
+//
+// glow = new THREE.Sprite(glowMaterial);
+// var scl = 40;
+// glow.scale.set(scl, scl, scl);
+// scene.add(glow);
+//
+// mesh1.scale.set(1, 1, 1);
+// mesh2.scale.set(1, 1, 1);
+// glow.scale.set(40, 40, 40);
+// materialGlow.opacity = 0.15;
+// glowMaterial.opacity = 0.05;
+//
+// mesh1.rotation.z += 0.05;
+// mesh2.rotation.z += 0.02;
+//
+// }
 
 /* ==================== [ Post Processing ] ==================== */
 
@@ -212,13 +293,11 @@ composer.addPass(effect);
 // dot.uniforms[ 'scale' ].value = 400;
 // dot.uniforms[ 'tDiffuse' ].value = 40;
 // dot.uniforms[ 'tSize' ].value = new THREE.Vector2( 256, 256 );
-//
 // composer.addPass(dot);
 
 // var kaleidoPass = new THREE.ShaderPass(THREE.KaleidoShader);
 // kaleidoPass.uniforms['sides'].value = 6;
 // kaleidoPass.uniforms['angle'].value = 45 * Math.PI / 180;
-//
 // composer.addPass(kaleidoPass);
 
 // var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
@@ -238,15 +317,6 @@ superPass.uniforms.glowSize.value = 2;
 superPass.uniforms.glowAmount.value = 1;
 composer.addPass( superPass );
 
-// var shaderTime = 0;
-// var shakePass = new THREE.ShaderPass( THREE.ShakeShader );
-// shakePass.uniforms.time.value =  shaderTime/10;
-// shakePass.uniforms.amount.value = Math.pow(2 ,8) * 0.5;
-// composer.addPass( shakePass );
-
-// var FXAAPass = new THREE.ShaderPass( THREE.FXAAShader );
-// composer.addPass( FXAAPass );
-
 var tv = new THREE.ShaderPass( THREE.BadTVShader );
 tv.uniforms[ "distortion" ].value = 1;
 tv.uniforms[ "distortion2" ].value = .01;
@@ -255,24 +325,11 @@ tv.uniforms[ "speed" ].value = 8.8;
 tv.uniforms[ "rollSpeed" ].value = 0.8;
 composer.addPass(tv);
 
-// var rippleLines = new THREE.RipplesShader;
-// rippleLines.uniforms[ "noiseTime" ].value = ;
-// rippleLines.uniforms[ "noiseSize" ].value = ;
-// rippleLines.uniforms[ "lineTime" ].value = ;
-// rippleLines.uniforms[ "lineCount" ].value = ;
-// rippleLines.uniforms[ "dotSize" ].value = ;
-// rippleLines.uniforms[ "lineSize" ].value = ;
-// rippleLines.uniforms[ "blur" ].value = ;
-// rippleLines.uniforms[ "depth" ].value = ;
-// rippleLines.uniforms[ "opacity" ].value = ;
-// composer.addPass(rippleLines);
-
-// var staticPass = new THREE.ShaderPass( THREE.StaticShader );
-// staticPass.uniforms[ "amount" ].value = 0.15;
-// staticPass.uniforms[ "size" ].value = 1.0;
-// staticPass.uniforms[ "time" ].value = 4.5;
-// composer.addPass(staticPass);
-
+var staticPass = new THREE.ShaderPass( THREE.StaticShader );
+staticPass.uniforms[ "amount" ].value = 0.15;
+staticPass.uniforms[ "size" ].value = 1.0;
+staticPass.uniforms[ "time" ].value = 4.5;
+composer.addPass(staticPass);
 
 var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
 effect1.uniforms['amount'].value = 0.003;
@@ -449,6 +506,12 @@ var render = function () {
 	  }
 	  particleSystem.rotation.y += -0.001;
 	  particleSystem.rotation.z += 0.005;
+
+		beamGroup.rotation.x += BEAM_ROT_SPEED;
+		beamGroup.rotation.y += BEAM_ROT_SPEED;
+
+
+
 
 }
 // stats.update();
