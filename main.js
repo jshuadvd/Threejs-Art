@@ -171,22 +171,26 @@ texture.src = './images/particle.png';
 //var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(texture) } );
 
 var particleCount = 0, particleSystem, particles;
-var texture = THREE.ImageUtils.loadTexture('images/particle.png');
+THREE.ImageUtils.crossOrigin = '';
+var texture = THREE.ImageUtils.loadTexture('https://uberviz.io/viz/splice/res/img/particle.png');
+console.log(texture);
 
 
 particleCount = 20000,
 particles = new THREE.Geometry();
 var pMaterial = new THREE.PointCloudMaterial({
   color: 0xFFFFFF,
-	//map: texture,
+	map: texture,
 	blending: THREE.AdditiveBlending,
 	depthTest: false,
 	depthWrite: false,
 	transparent: true,
 	opacity: 0.3,
 	side: THREE.DoubleSide,
-  size: 0.4
- });
+  size: 1.2
+});
+
+
 
 for (var i = 0; i < particleCount; i++) {
     var pX = Math.random() * 500 - 250,
@@ -198,6 +202,8 @@ for (var i = 0; i < particleCount; i++) {
 }
 
 particleSystem = new THREE.ParticleSystem(particles, pMaterial);
+particleSystem.sortParticles = false;
+particleSystem.frustumCulled = false;
 scene.add(particleSystem);
 
 /* ==================== [ Post Processing ] ==================== */
@@ -436,7 +442,7 @@ var render = function () {
 	      particle.y = Math.random() * 500 - 250;
 	      particleSystem.geometry.vertices.needsUpdate = true;
 	  }
-	  particleSystem.rotation.y += 0.001;
+	  particleSystem.rotation.y += -0.001;
 	  particleSystem.rotation.z += 0.005;
 
 }

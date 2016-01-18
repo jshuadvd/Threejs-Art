@@ -22,7 +22,7 @@ var Stars = function() {
 		starGeometry = new THREE.Geometry();
 
 		//create one shared material
-		material = new THREE.PointCloudMaterial({
+		material = new THREE.PointsMaterial({
 			size: 2,
 			map: starTexture,
 			blending: THREE.AdditiveBlending,
