@@ -3,6 +3,8 @@
 var scene, camera, renderer, aspectRatio;
 var stats;
 var composer, effect, clock;
+var backMesh;
+
 
 /* ==================== [ Audio Context ] ==================== */
 
@@ -66,6 +68,10 @@ scene.add(pointLightBlue);
 var pointLight = new THREE.PointLight("#A805FA", 2, 100, 40);
 pointLight.position.set(40, 0, 40);
 scene.add(pointLight);
+
+var light2 = new THREE.PointLight( 0xFFFFFF, 1, 1000 );
+scene.add( light2 );
+light2.position.z = 1000;
 
 // var sphereSize = 5;
 // var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
@@ -152,6 +158,25 @@ scene.add(beamGroup);
 
 /* ==================== [ Cubes ] ==================== */
 
+var doStrobe = false;
+var doShake = false;
+var strobeOn = false;
+var beatTime = 30;
+
+THREE.ImageUtils.crossOrigin = '';
+var imgTextureStripes2 = THREE.ImageUtils.loadTexture( "https://uberviz.io/viz/pareidolia/img/stripes2.jpg" );
+imgTextureStripes2.wrapS = imgTextureStripes2.wrapT = THREE.RepeatWrapping;
+imgTextureStripes2.repeat.set( 100, 100 );
+backMaterial2 = new THREE.MeshBasicMaterial( {
+	map:imgTextureStripes2
+} );
+
+backMesh2 = new THREE.Mesh( new THREE.SphereGeometry( 1900, 30, 20 ), backMaterial2  );
+backMesh2.scale.x = -1;
+scene.add( backMesh2 );
+backMesh2.visible = false;
+
+
 var cubesize = 100;
 var BOX_COUNT
 var geometry = new THREE.CubeGeometry(cubesize, cubesize, cubesize);
@@ -163,9 +188,10 @@ cubeMaterial  = new THREE.MeshPhongMaterial( {
 	color: 0x666666,
 	specular: 0x999999,
 	shininess: 30,
-	shading: THREE.FlatShading ,
+	shading: THREE.FlatShading,
 	map:imgTextureStripes
 });
+
 for(i = 0; i < BOX_COUNT; i++) {
 	var box = new Box();
 	boxes.push(box);
@@ -473,29 +499,6 @@ var render = function () {
 	renderer.render(scene, camera);
   composer.render();
 
-	// var camz = getCamera().position.z;
-	//
-	// for (i = 0; i < starCount; i++) {
-	//
-	// 	starGeometry.vertices[i].z -= 1;
-	//
-	// 	if (starGeometry.vertices[i].z < camz){
-	// 		starGeometry.vertices[i].z = camz  +  Math.random()*600 + 200 ;
-	// 	}
-	//
-	// }
-	// starGeometry.verticesNeedUpdate = true;
-	//
-	// // reset all stars infront of cam
-	// var camz = getCamera().position.z;
-	//
-	// for (i = 0; i < starCount; i++) {
-	// 	starGeometry.vertices[i].z = camz  +  Math.random()*600 + 200 ;
-	// }
-	//
-	// starGeometry.verticesNeedUpdate = true;
-
-
 	var pCount = particleCount;
 	  while (pCount--) {
 			var camz = getCamera().position.z;
@@ -504,14 +507,56 @@ var render = function () {
 			//particleSystem.vertices[i].z = camz  +  Math.random()*600 + 200 ;
       particleSystem.geometry.vertices.needsUpdate = true;
 	  }
+
 	  particleSystem.rotation.y += -0.001;
 	  particleSystem.rotation.z += 0.005;
 
+		var normLevel = 0.2;
 		beamGroup.rotation.x += BEAM_ROT_SPEED;
 		beamGroup.rotation.y += BEAM_ROT_SPEED;
+		beamMaterial.opacity = Math.min(normLevel * 0.4, 0.6);
+		camera.rotation.z += 0.003;
 
+		if (doShake){
+		var maxshake = 60;
 
+		var shake = normLevel * maxshake ;
+		camera.position.x = Math.random()*shake - shake/2;
+		camera.position.y = Math.random()*shake - shake/2;
+	}
 
+	camera.rotation.z += 0.003;
+	camera.rotation.z += 0.03;
+
+	if (doStrobe){
+	strobeOn = !strobeOn;
+		if (strobeOn){
+			light2.intensity = 2;
+		}
+		else {
+			light2.intensity = 0.5;
+		}
+	}
+	else {
+		light2.intensity = 0.2;
+	}
+
+	// flash background  on level threshold
+	if (normLevel > 0.5 ){
+		renderer.setClearColor ( 0xFFFFFF );
+		backMesh2.visible = true;
+	}
+	else{
+		renderer.setClearColor ( 0x000000 );
+		backMesh2.visible = false;
+	}
+
+	// show stripes for 6 frames on beat
+	backMesh2.visible = beatTime < 6;
+
+	for(var i = 0; i < BOX_COUNT; i++) {
+	boxes[i].update();
+  }
 
 }
 // stats.update();
