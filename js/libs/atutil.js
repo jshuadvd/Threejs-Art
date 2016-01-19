@@ -1,7 +1,3 @@
-/*
-Airtight Utilities
-v 0.1.0
-*/
 
 ATUtil = {
 	randomRange : function(min, max) {

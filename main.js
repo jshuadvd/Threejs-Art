@@ -21,11 +21,24 @@ var analyser = ctx.createAnalyser();
 audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
 
+
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 analyser.getByteFrequencyData(frequencyData);
+
 console.log(audioSrc);
+console.log(audioSrc.context.currentTime);
 console.log(frequencyData);
+
+
+console.log(analyser.fftSize); // 2048 by default
+console.log(analyser.frequencyBinCount); // will give us 1024 data points
+
+analyser.fftSize = 64;
+console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
+
+
+
 
 
 /* ==================== [ Set Scene & Camera ] ==================== */
@@ -83,7 +96,7 @@ var getCamera = function() {
 	return camera;
 }
 
-var texture = new Image();
+// var texture = new Image();
 // texture.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/82015/snowflake.png';
 // texture.src = './images/particle.png';
 //var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(texture) } );
@@ -135,7 +148,7 @@ beamMaterial = new THREE.MeshBasicMaterial({
 });
 
 for (var i = 0; i <= BEAM_COUNT; ++i) {
-	beam = new THREE.Mesh(beamGeometry, beamMaterial);
+	var beam = new THREE.Mesh(beamGeometry, beamMaterial);
 	beam.doubleSided = true;
 	beam.rotation.x = Math.random() * Math.PI;
 	beam.rotation.y = Math.random() * Math.PI;
@@ -143,7 +156,7 @@ for (var i = 0; i <= BEAM_COUNT; ++i) {
 	beamGroup.add(beam);
 }
 scene.add(beamGroup);
-// beamGroup.translateZ( 5 );
+beamGroup.translateZ( -5 );
 
 /* ==================== [ Cubes ] ==================== */
 
@@ -236,6 +249,34 @@ scene.add(cubeHolder);
 
 /* ==================== [ Mini Geometries ] ==================== */
 
+var leaves = 100;
+var planes = [];
+// Plane particles
+var planePiece = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
+
+var planeMat = new THREE.MeshPhongMaterial({
+	color: 0xffffff * 0.4,
+	shininess: 0.5,
+	specular: 0xffffff,
+	//envMap: textureCube,
+	side: THREE.DoubleSide
+});
+
+var rand = Math.random;
+
+for (i = 0; i < leaves; i++) {
+	plane = new THREE.Mesh(planePiece, planeMat);
+	plane.rotation.set(rand(), rand(), rand());
+	plane.rotation.dx = rand() * 0.1;
+	plane.rotation.dy = rand() * 0.1;
+	plane.rotation.dz = rand() * 0.1;
+
+	plane.position.set(rand() * 150, 0 + rand() * 300, rand() * 150);
+	plane.position.dx = (rand() - 0.5);
+	plane.position.dz = (rand() - 0.5);
+	scene.add(plane);
+	planes.push(plane);
+}
 
 /* ==================== [ Post Processing ] ==================== */
 
@@ -315,11 +356,11 @@ clock = new THREE.Clock;
 var quantity = 40;
 var shapes = [];
 
-
 for (var i = 0; i < quantity; i++) {
 
 	if (Math.random() < 0.5) {
 		var geometry = new THREE.RingGeometry(4, 40, 3);
+		// geometry.position = 0;
 
 		// var geometry = new THREE.RingGeometry( 30, 30, 18);
 		// camera.position.z = 60;
@@ -332,8 +373,20 @@ for (var i = 0; i < quantity; i++) {
 	}
 
 	else {
-		// var geometry = new THREE.RingGeometry( 4, 40, 3);
 
+
+		function turnOnMirror() {
+
+			var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
+			// mirror.uniforms[ "tDiffuse" ].value = 1.0;
+			// mirror.uniforms[ "side" ].value = 3;
+			mirror.renderToScreen = true;
+			composer.addPass(mirror);
+		}
+
+	  //var geometry = new THREE.RingGeometry( 4, 40, 3);
+
+		// var geometry = new THREE.RingGeometry( 30, 30, 18);
 
 		// var geometry = new THREE.RingGeometry( 1, 5, 6 );
 		// var material = new THREE.MeshBasicMaterial( { color: 0xffff00,
@@ -344,6 +397,7 @@ for (var i = 0; i < quantity; i++) {
 		// var points = [];
 		// for ( var j = 0; j < 10; j++ ) {
 		// 	points.push( new THREE.Vector3( Math.sin( j * 0.2 ) * 15 + 50, 0, ( j - 5 ) * 2 ) );
+		// }
 		//
 		// }
 		// var geometry = new THREE.LatheGeometry( points );
@@ -373,17 +427,16 @@ for (var i = 0; i < quantity; i++) {
 	scene.add(mesh);
 }
 
-
-function refRate() {
-  curTime = Date.now();
-  delta = curTime - oldTime;
-
-  if (delta > interval) {
-    oldTime = curTime - (delta % interval);
-    updateSize();
-  }
-
-}
+// function refRate() {
+//   curTime = Date.now();
+//   delta = curTime - oldTime;
+//
+//   if (delta > interval) {
+//     oldTime = curTime - (delta % interval);
+//     updateSize();
+//   }
+//
+// }
 
 // Variables
 var u_time = 0;
@@ -412,7 +465,11 @@ var render = function () {
 		if (Math.random() < change) {
 			shapes[i].material.wireframe = false;
 			shapes[i].material.wireframeLinewidth = Math.random() * 2;
-		} else {
+			// if (shapes[i] / 2 === 0) {
+			// 	turnOnMirror();
+			// }
+		}
+		else {
 			shapes[i].material.wireframe = false;
 		}
 
@@ -429,11 +486,9 @@ var render = function () {
 	pointLight2.position.z = Math.abs(Math.cos(u_time * 0.02) * 30);
 
 	// camera.rotation.y = 90 * Math.PI / 180;
-	camera.rotation.z = frequencyData[20] * Math.PI / 180;
-	camera.rotation.x = frequencyData[100] * Math.PI / 180;
+	// camera.rotation.z = frequencyData[20] * Math.PI / 180;
+	// camera.rotation.x = frequencyData[100] * Math.PI / 180;
 	// console.log(frequencyData);
-
-
 
 	renderer.render(scene, camera);
   composer.render();
@@ -482,7 +537,7 @@ var render = function () {
 		light2.intensity = 0.2;
 	}
 
-	// flash background  on level threshold
+	// flash background on level threshold
 	if (normLevel > 0.5 ){
 		renderer.setClearColor ( 0xFFFFFF );
 		backMesh2.visible = true;
@@ -498,6 +553,23 @@ var render = function () {
 	for(var i = 0; i < BOX_COUNT; i++) {
 	boxes[i].update();
   }
+
+	for (i = 0; i < leaves; i++) {
+		plane = planes[i];
+		plane.rotation.x += plane.rotation.dx;
+		plane.rotation.y += plane.rotation.dy;
+		plane.rotation.z += plane.rotation.dz;
+		plane.position.y -= 2;
+		plane.position.x += plane.position.dx;
+		plane.position.z += plane.position.dz;
+		if (plane.position.y < 0) plane.position.y += 300;
+	}
+
+	if (audioSrc.context.currentTime > 30.0) {
+		turnOnMirror();
+	}
+
+	//console.log(audioSrc.context.currentTime);
 
 }
 // stats.update();
