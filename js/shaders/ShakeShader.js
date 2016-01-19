@@ -1,8 +1,4 @@
-/**
- * @author felixturner / http://airtight.cc/
- *
- *	That ol' shakey cam
- */
+
 
 THREE.ShakeShader = {
 
