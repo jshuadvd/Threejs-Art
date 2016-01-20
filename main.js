@@ -558,29 +558,32 @@ var render = function () {
 		if (plane.position.y < 0) plane.position.y += 500;
 	}
 
-	var mirrorTimes = [32.0, 136.0];
-	var noMirrorTimes = [96.0,, 214.0];
+	// var mirrorTimes = [32.0, 96.0, 136.0, 214.0];
 
-	for (var i = 0; i < mirrorTimes.length; i++) {
-		if (audioSrc.context.currentTime > mirrorTimes[i]) {
-			mirror.enabled = true;
-		}
-		if (audioSrc.context.currentTime > noMirrorTimes[i]) {
-			mirror.enabled = false;
-		}
+	if (audioSrc.context.currentTime > 32) {
+		mirror.enabled = true;
 	}
-	var songTimes = [16.0, 48.0, 80.0, 112.0, 144.0, 160.0];
-	var dotTimes = [17.0, 49.0, 81.0, 113.0, 145.0, 161.0];
-	// console.log(songTimes.length);
-	for (var i = 0; i < songTimes.length; i++) {
-		if (audioSrc.context.currentTime > songTimes[i]) {
-			dot.enabled = true;
-		}
-		if (audioSrc.context.currentTime > dotTimes[i]) {
-			dot.enabled = false;
-		}
-		//console.log(songTimes[i]);
+	if (audioSrc.context.currentTime > 96) {
+		mirror.enabled = false;
 	}
+	if (audioSrc.context.currentTime > 136) {
+		mirror.enabled = true;
+	}
+	if (audioSrc.context.currentTime > 214) {
+		mirror.enabled = false;
+	}
+	// var songTimes = [16.0, 48.0, 80.0, 112.0, 144.0, 160.0];
+	// var dotTimes = [17.0, 49.0, 81.0, 113.0, 145.0, 161.0];
+	// // console.log(songTimes.length);
+	// for (var i = 0; i < songTimes.length; i++) {
+	// 	if (audioSrc.context.currentTime > songTimes[i]) {
+	// 		dot.enabled = true;
+	// 	}
+	// 	if (audioSrc.context.currentTime > dotTimes[i]) {
+	// 		dot.enabled = false;
+	// 	}
+	// 	//console.log(songTimes[i]);
+	// }
 
 
 	// console.log(audioSrc.context.currentTime);
