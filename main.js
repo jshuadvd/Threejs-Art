@@ -21,7 +21,6 @@ var analyser = ctx.createAnalyser();
 audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
 
-
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 analyser.getByteFrequencyData(frequencyData);
@@ -30,15 +29,11 @@ console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
 console.log(frequencyData);
 
-
 console.log(analyser.fftSize); // 2048 by default
-console.log(analyser.frequencyBinCount); // will give us 1024 data points
+console.log(analyser.frequencyBinCount); // will give me 1024 data points
 
 analyser.fftSize = 64;
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
-
-
-
 
 
 /* ==================== [ Set Scene & Camera ] ==================== */
@@ -217,7 +212,7 @@ function getRand(minVal, maxVal) {
 	return minVal + (Math.random() * (maxVal - minVal));
 }
 
-var cubesize = 100;
+var cubesize = 1000;
 var BOX_COUNT;
 var geometry = new THREE.CubeGeometry(cubesize, cubesize, cubesize);
 cubeHolder = new THREE.Object3D();
@@ -237,7 +232,7 @@ for(i = 0; i < BOX_COUNT; i++) {
 	var box = new Box();
 	console.log(box);
 	boxes.push(box);
-	var cube = new THREE.Mesh(geometry,cubeMaterial );
+	var cube = new THREE.Mesh(geometry, cubeMaterial);
 	cube.position = box.posn;
 	cube.rotation = box.rotation;
 	cube.ox = cube.scale.x = Math.random() * 1 + 1;
@@ -249,34 +244,7 @@ scene.add(cubeHolder);
 
 /* ==================== [ Mini Geometries ] ==================== */
 
-var leaves = 100;
-var planes = [];
-// Plane particles
-var planePiece = new THREE.PlaneBufferGeometry(10, 10, 1, 1);
 
-var planeMat = new THREE.MeshPhongMaterial({
-	color: 0xffffff * 0.4,
-	shininess: 0.5,
-	specular: 0xffffff,
-	//envMap: textureCube,
-	side: THREE.DoubleSide
-});
-
-var rand = Math.random;
-
-for (i = 0; i < leaves; i++) {
-	plane = new THREE.Mesh(planePiece, planeMat);
-	plane.rotation.set(rand(), rand(), rand());
-	plane.rotation.dx = rand() * 0.1;
-	plane.rotation.dy = rand() * 0.1;
-	plane.rotation.dz = rand() * 0.1;
-
-	plane.position.set(rand() * 150, 0 + rand() * 300, rand() * 150);
-	plane.position.dx = (rand() - 0.5);
-	plane.position.dz = (rand() - 0.5);
-	scene.add(plane);
-	planes.push(plane);
-}
 
 /* ==================== [ Post Processing ] ==================== */
 
@@ -291,21 +259,24 @@ effect.uniforms['sCount'].value = 1800;
 effect.uniforms['grayscale'].value = 0.8;
 composer.addPass(effect);
 
-// var dot = new THREE.ShaderPass( THREE.DotScreenShader );
-// dot.uniforms[ 'scale' ].value = 400;
-// dot.uniforms[ 'tDiffuse' ].value = 40;
-// dot.uniforms[ 'tSize' ].value = new THREE.Vector2( 256, 256 );
-// composer.addPass(dot);
+var dot = new THREE.ShaderPass( THREE.DotScreenShader );
+dot.uniforms[ 'scale' ].value = 400;
+dot.uniforms[ 'tDiffuse' ].value = 40;
+dot.uniforms[ 'tSize' ].value = new THREE.Vector2( 256, 256 );
+dot.enabled = false;
+composer.addPass(dot);
 
 // var kaleidoPass = new THREE.ShaderPass(THREE.KaleidoShader);
 // kaleidoPass.uniforms['sides'].value = 3;
 // kaleidoPass.uniforms['angle'].value = 45 * Math.PI / 180;
 // composer.addPass(kaleidoPass);
 
-// var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
-// // mirror.uniforms[ "tDiffuse" ].value = 1.0;
-// // mirror.uniforms[ "side" ].value = 3;
-// composer.addPass(mirror);
+var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
+// mirror.uniforms[ "tDiffuse" ].value = 1.0;
+// mirror.uniforms[ "side" ].value = 3;
+mirror.enabled = false;
+composer.addPass(mirror);
+
 
 var glitch = new THREE.GlitchPass(64);
 glitch.uniforms[ "tDiffuse" ].value = 1.0;
@@ -338,18 +309,49 @@ composer.addPass(staticPass);
 var effect1 = new THREE.ShaderPass(THREE.RGBShiftShader);
 effect1.uniforms['amount'].value = 0.003;
 effect1.renderToScreen = true;
-composer.addPass(effect1);
+composer.addPass(effect1)
 
 // add a timer
 clock = new THREE.Clock;
 
+/* ==================== [ Confetti ] ==================== */
+
+var leaves = 10000;
+var planes = [];
+
+// Plane particles
+var planePiece = new THREE.PlaneBufferGeometry(1, 1, 1, 1);
+var planeMat = new THREE.MeshPhongMaterial({
+	color: 0xffffff * 0.4,
+	shininess: 0.2,
+	specular: 0xffffff,
+	//envMap: textureCube,
+	side: THREE.DoubleSide
+});
+
+var rand = Math.random;
+
+for (i = 0; i < leaves; i++) {
+	plane = new THREE.Mesh(planePiece, planeMat);
+	plane.rotation.set(rand(), rand(), rand());
+	plane.rotation.dx = rand() * 0.1;
+	plane.rotation.dy = rand() * 0.1;
+	plane.rotation.dz = rand() * 0.1;
+
+	plane.position.set(rand() * 150, 0 + rand() * 300, rand() * 150);
+	plane.position.dx = (rand() - 0.5);
+	plane.position.dz = (rand() - 0.5);
+	scene.add(plane);
+	planes.push(plane);
+}
+
 /* ==================== [ Stats ] ==================== */
 
-// stats = new Stats();
-// stats.domElement.style.position = 'absolute';
-// stats.domElement.style.left = '0px';
-// stats.domElement.style.top = '0px';
-// document.body.appendChild(stats.domElement);
+stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.top = '0px';
+document.body.appendChild(stats.domElement);
 
 /* ==================== [ Shapes ] ==================== */
 
@@ -373,16 +375,6 @@ for (var i = 0; i < quantity; i++) {
 	}
 
 	else {
-
-
-		function turnOnMirror() {
-
-			var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
-			// mirror.uniforms[ "tDiffuse" ].value = 1.0;
-			// mirror.uniforms[ "side" ].value = 3;
-			mirror.renderToScreen = true;
-			composer.addPass(mirror);
-		}
 
 	  //var geometry = new THREE.RingGeometry( 4, 40, 3);
 
@@ -445,6 +437,7 @@ var u_time = 0;
 
 var render = function () {
 	requestAnimationFrame(render);
+
 	// var timer = Date.now() * 0.0010;
 	// camera.lookAt(scene.position);
 	u_time++;
@@ -511,13 +504,13 @@ var render = function () {
 		beamMaterial.opacity = Math.min(normLevel * 0.4, 0.6);
 		camera.rotation.z += 0.003;
 
-		if (doShake){
+		if (doShake) {
 		var maxshake = 60;
 
 		var shake = normLevel * maxshake ;
 		camera.position.x = Math.random()*shake - shake/2;
 		camera.position.y = Math.random()*shake - shake/2;
-	}
+		}
 
 	camera.rotation.z += 0.003;
 	// camera.rotation.y += 0.005;
@@ -554,7 +547,7 @@ var render = function () {
 	boxes[i].update();
   }
 
-	for (i = 0; i < leaves; i++) {
+	for (var i = 0; i < leaves; i++) {
 		plane = planes[i];
 		plane.rotation.x += plane.rotation.dx;
 		plane.rotation.y += plane.rotation.dy;
@@ -562,15 +555,36 @@ var render = function () {
 		plane.position.y -= 2;
 		plane.position.x += plane.position.dx;
 		plane.position.z += plane.position.dz;
-		if (plane.position.y < 0) plane.position.y += 300;
+		if (plane.position.y < 0) plane.position.y += 500;
 	}
 
-	if (audioSrc.context.currentTime > 30.0) {
-		turnOnMirror();
+	var mirrorTimes = [32.0, 136.0];
+	var noMirrorTimes = [96.0,, 214.0];
+
+	for (var i = 0; i < mirrorTimes.length; i++) {
+		if (audioSrc.context.currentTime > mirrorTimes[i]) {
+			mirror.enabled = true;
+		}
+		if (audioSrc.context.currentTime > noMirrorTimes[i]) {
+			mirror.enabled = false;
+		}
+	}
+	var songTimes = [16.0, 48.0, 80.0, 112.0, 144.0, 160.0];
+	var dotTimes = [17.0, 49.0, 81.0, 113.0, 145.0, 161.0];
+	// console.log(songTimes.length);
+	for (var i = 0; i < songTimes.length; i++) {
+		if (audioSrc.context.currentTime > songTimes[i]) {
+			dot.enabled = true;
+		}
+		if (audioSrc.context.currentTime > dotTimes[i]) {
+			dot.enabled = false;
+		}
+		//console.log(songTimes[i]);
 	}
 
-	//console.log(audioSrc.context.currentTime);
 
+	// console.log(audioSrc.context.currentTime);
+stats.update();
 }
-// stats.update();
+
 render();
