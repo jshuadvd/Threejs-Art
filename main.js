@@ -133,7 +133,7 @@ scene.add(particleSystem);
 
 /* ==================== [ Light Beams ] ==================== */
 
-var BEAM_ROT_SPEED = 0.003;
+var beamRotationSpeed = 0.003;
 var BEAM_COUNT = 360;
 var beamGeometry = new THREE.PlaneBufferGeometry(1, 500, 10, 1);
 beamGroup = new THREE.Object3D();
@@ -499,8 +499,8 @@ var render = function () {
 	  particleSystem.rotation.z += 0.005;
 
 		var normLevel = 0.2;
-		beamGroup.rotation.x += BEAM_ROT_SPEED;
-		beamGroup.rotation.y += BEAM_ROT_SPEED;
+		beamGroup.rotation.x += beamRotationSpeed;
+		beamGroup.rotation.y += beamRotationSpeed;
 		beamMaterial.opacity = Math.min(normLevel * 0.4, 0.6);
 		camera.rotation.z += 0.003;
 
