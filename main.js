@@ -3,8 +3,6 @@
 var scene, camera, renderer, aspectRatio;
 var stats;
 var composer, effect, clock;
-var backMesh;
-
 
 /* ==================== [ Audio Context ] ==================== */
 
@@ -134,7 +132,7 @@ scene.add(particleSystem);
 /* ==================== [ Light Beams ] ==================== */
 
 var beamRotationSpeed = 0.003;
-var BEAM_COUNT = 360;
+var beamCount = 360;
 var beamGeometry = new THREE.PlaneBufferGeometry(1, 500, 10, 1);
 beamGroup = new THREE.Object3D();
 beamMaterial = new THREE.MeshBasicMaterial({
@@ -142,7 +140,7 @@ beamMaterial = new THREE.MeshBasicMaterial({
 	transparent: true,
 });
 
-for (var i = 0; i <= BEAM_COUNT; ++i) {
+for (var i = 0; i <= beamCount; ++i) {
 	var beam = new THREE.Mesh(beamGeometry, beamMaterial);
 	beam.doubleSided = true;
 	beam.rotation.x = Math.random() * Math.PI;
@@ -155,92 +153,7 @@ beamGroup.translateZ( -5 );
 
 /* ==================== [ Cubes ] ==================== */
 
-var doStrobe = false;
-var doShake = false;
-var strobeOn = false;
-var beatTime = 30;
 
-THREE.ImageUtils.crossOrigin = '';
-var imgTextureStripes2 = THREE.ImageUtils.loadTexture( "./images/stripes2.jpg" );
-imgTextureStripes2.wrapS = imgTextureStripes2.wrapT = THREE.RepeatWrapping;
-imgTextureStripes2.repeat.set( 100, 100 );
-backMaterial2 = new THREE.MeshBasicMaterial( {
-	map:imgTextureStripes2
-} );
-
-backMesh2 = new THREE.Mesh( new THREE.SphereGeometry( 1900, 30, 20 ), backMaterial2  );
-backMesh2.scale.x = -1;
-scene.add( backMesh2 );
-backMesh2.visible = false;
-
-
-function Box() {
-	this.posn = new THREE.Vector3();
-	this.rotation = new THREE.Vector3();
-	this.speed = getRand(3, 20);
-	this.init();
-}
-
-Box.ORIGIN = new THREE.Vector3();
-Box.MAX_DISTANCE = 1000;
-Box.INIT_POSN_RANGE = 500;
-Box.FRONT_PLANE_Z = 1000;
-Box.BACK_PLANE_Z = -1000;
-
-Box.prototype.init = function() {
-	this.posn.copy(Box.ORIGIN);
-	this.posn.x = getRand(-Box.INIT_POSN_RANGE,Box.INIT_POSN_RANGE);
-	this.posn.y = getRand(-Box.INIT_POSN_RANGE,Box.INIT_POSN_RANGE);
-	this.posn.z = Box.BACK_PLANE_Z;
-	this.rotation.x = (Math.random() * 360 ) * Math.PI / 180;
-	this.rotation.y = (Math.random() * 360 ) * Math.PI / 180;
-	this.rotation.z = (Math.random() * 360 ) * Math.PI / 180;
-};
-
-Box.prototype.update = function() {
-	this.posn.z += this.speed * sketchParams.cubeSpeed ;
-	this.rotation.x += 0.03;
-	this.rotation.y += 0.01;
-
-	if(this.posn.z > Box.FRONT_PLANE_Z) {
-		this.init();
-	}
-};
-
-// returns random number within a range
-function getRand(minVal, maxVal) {
-	return minVal + (Math.random() * (maxVal - minVal));
-}
-
-var cubesize = 1000;
-var BOX_COUNT;
-var geometry = new THREE.CubeGeometry(cubesize, cubesize, cubesize);
-cubeHolder = new THREE.Object3D();
-
-THREE.ImageUtils.crossOrigin = '';
-imgTextureStripes = THREE.ImageUtils.loadTexture( "./images/stripes2.jpg" );
-cubeMaterial  = new THREE.MeshPhongMaterial( {
-	ambient: 0x111111,
-	color: 0x666666,
-	specular: 0x999999,
-	shininess: 30,
-	shading: THREE.FlatShading,
-	map:imgTextureStripes
-});
-
-for(i = 0; i < BOX_COUNT; i++) {
-	var box = new Box();
-	console.log(box);
-	boxes.push(box);
-	var cube = new THREE.Mesh(geometry, cubeMaterial);
-	cube.position = box.posn;
-	cube.rotation = box.rotation;
-	cube.ox = cube.scale.x = Math.random() * 1 + 1;
-	cube.oy = cube.scale.y = Math.random() * 1 + 1;
-	cube.oz = cube.scale.z = Math.random() * 1 + 1;
-	cubeHolder.add(cube);
-}
-scene.add(cubeHolder);
 
 /* ==================== [ Mini Geometries ] ==================== */
 
@@ -458,9 +371,7 @@ var render = function () {
 		if (Math.random() < change) {
 			shapes[i].material.wireframe = false;
 			shapes[i].material.wireframeLinewidth = Math.random() * 2;
-			// if (shapes[i] / 2 === 0) {
-			// 	turnOnMirror();
-			// }
+
 		}
 		else {
 			shapes[i].material.wireframe = false;
@@ -504,48 +415,12 @@ var render = function () {
 		beamMaterial.opacity = Math.min(normLevel * 0.4, 0.6);
 		camera.rotation.z += 0.003;
 
-		if (doShake) {
-		var maxshake = 60;
 
-		var shake = normLevel * maxshake ;
-		camera.position.x = Math.random()*shake - shake/2;
-		camera.position.y = Math.random()*shake - shake/2;
-		}
 
 	camera.rotation.z += 0.003;
 	// camera.rotation.y += 0.005;
 	// camera.rotation.x -= 0.003;
 	//camera.rotation.z += 0.03;
-
-	if (doStrobe){
-	strobeOn = !strobeOn;
-		if (strobeOn){
-			light2.intensity = 2;
-		}
-		else {
-			light2.intensity = 0.5;
-		}
-	}
-	else {
-		light2.intensity = 0.2;
-	}
-
-	// flash background on level threshold
-	if (normLevel > 0.5 ){
-		renderer.setClearColor ( 0xFFFFFF );
-		backMesh2.visible = true;
-	}
-	else{
-		renderer.setClearColor ( 0x000000 );
-		backMesh2.visible = false;
-	}
-
-	// show stripes for 6 frames on beat
-	backMesh2.visible = beatTime < 6;
-
-	for(var i = 0; i < BOX_COUNT; i++) {
-	boxes[i].update();
-  }
 
 	for (var i = 0; i < leaves; i++) {
 		plane = planes[i];
@@ -584,7 +459,6 @@ var render = function () {
 	// 	}
 	// 	//console.log(songTimes[i]);
 	// }
-
 
 	// console.log(audioSrc.context.currentTime);
 stats.update();
