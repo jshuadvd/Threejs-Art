@@ -61,16 +61,6 @@ var pointLightBlue = new THREE.PointLight("#00ccff", 5, 100, 2);
 pointLightBlue.position.set(-10, -40, -10);
 scene.add(pointLightBlue);
 
-// var pointLightWhite = new THREE.PointLight( "#ffffff", 1, 0, 1 );
-// // pointLightWhite.position.set( -10, 160, -10 );
-// pointLightWhite.position.set( 0, 0, 1 );
-// scene.add(pointLightWhite);
-// camera.add(pointLightWhite);
-
-// var pointLightPink = new THREE.PointLight( "#EE567C", 5, 100, 10 );
-// pointLightPink.position.set( 1, 0, -5 );
-// scene.add(pointLightPink);
-
 var pointLight = new THREE.PointLight("#A805FA", 2, 100, 40);
 pointLight.position.set(40, 0, 40);
 scene.add(pointLight);
