@@ -87,8 +87,6 @@ var getCamera = function() {
 var particleCount = 0, particleSystem, particles;
 THREE.ImageUtils.crossOrigin = '';
 var texture = THREE.ImageUtils.loadTexture('./images/particle.png');
-//console.log(texture);
-
 
 particleCount = 20000,
 particles = new THREE.Geometry();
