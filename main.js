@@ -403,8 +403,6 @@ var render = function () {
 		beamMaterial.opacity = Math.min(normLevel * 0.4, 0.6);
 		camera.rotation.z += 0.003;
 
-
-
 	camera.rotation.z += 0.003;
 	// camera.rotation.y += 0.005;
 	// camera.rotation.x -= 0.003;
