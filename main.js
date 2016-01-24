@@ -107,7 +107,6 @@ for (var i = 0; i < particleCount; i++) {
         pY = Math.random() * 500 - 250,
         pZ = Math.random() * 500 - 250,
         particle = new THREE.Vector3(pX, pY, pZ);
-
     particles.vertices.push(particle);
 }
 
