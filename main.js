@@ -115,7 +115,6 @@ particleSystem.sortParticles = false;
 particleSystem.frustumCulled = false;
 scene.add(particleSystem);
 
-
 /* ==================== [ Light Beams ] ==================== */
 
 var beamRotationSpeed = 0.003;
