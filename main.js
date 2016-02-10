@@ -20,13 +20,13 @@ audioSrc.connect(analyser);
 audioSrc.connect(ctx.destination);
 
 // frequencyBinCount tells you how many values you'll receive from the analyser
-var frequencyData = new Uint8Array(analyser.frequencyBinCount);
-analyser.getByteFrequencyData(frequencyData);
+var frequencyData = new Uint8Array(24);
+// analyser.getByteFrequencyData(frequencyData);
 
 console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
 console.log(frequencyData);
-
+console.log(analyser);
 console.log(analyser.fftSize); // 2048 by default
 console.log(analyser.frequencyBinCount); // will give me 1024 data points
 
@@ -418,6 +418,9 @@ var render = function () {
 	}
 
 	// var mirrorTimes = [32.0, 96.0, 136.0, 214.0];
+
+	analyser.getByteFrequencyData(frequencyData);
+	console.log(frequencyData)
 
 	if (audioSrc.context.currentTime > 32) {
 		mirror.enabled = true;
