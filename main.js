@@ -11,7 +11,7 @@ var audio = document.getElementById('player');
 
 audio.play();
 audio.volume = 1;
-// audio.crossOrigin = "anonymous";
+audio.crossOrigin = "anonymous";
 
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
@@ -404,7 +404,7 @@ var render = function () {
 	camera.rotation.z += 0.003;
 	// camera.rotation.y += 0.005;
 	// camera.rotation.x -= 0.003;
-	//camera.rotation.z += 0.03;
+	// camera.rotation.z += 0.03;
 
 	for (var i = 0; i < leaves; i++) {
 		plane = planes[i];
