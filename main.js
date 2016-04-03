@@ -419,7 +419,11 @@ var render = function () {
 	}
 
 	// var mirrorTimes = [32.0, 96.0, 136.0, 214.0];
-
+	
+	// CAN RENDER THE AUDIO DATA HERE
+	// NOW NEED TO DETERMINE HOW TO MAP SAID DATA
+	// TO SHAPES AND GEOMETRIES
+	
 	analyser.getByteFrequencyData(frequencyData);
 	console.log(frequencyData)
 
