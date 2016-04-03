@@ -75,6 +75,7 @@ scene.add(pointLight2);
 
 /* ==================== [ Particles ] ==================== */
 
+/* ==================== [ Need to Effect Be Certain, CORS doesn't Effect Images ] ==================== */
 var getCamera = function() {
 	return camera;
 }
