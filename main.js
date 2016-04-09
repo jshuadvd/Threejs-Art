@@ -450,7 +450,6 @@ var render = function () {
 	// 	}
 	// 	//console.log(songTimes[i]);
 	// }
-
 	// console.log(audioSrc.context.currentTime);
 stats.update();
 }
