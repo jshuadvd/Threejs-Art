@@ -145,7 +145,6 @@ beamGroup.translateZ( -5 );
 /* ==================== [ Mini Geometries ] ==================== */
 
 
-
 /* ==================== [ Post Processing ] ==================== */
 
 composer = new THREE.EffectComposer(renderer);
