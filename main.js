@@ -175,7 +175,6 @@ var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
 mirror.enabled = false;
 composer.addPass(mirror);
 
-
 var glitch = new THREE.GlitchPass(64);
 glitch.uniforms[ "tDiffuse" ].value = 1.0;
 glitch.uniforms[ 'seed' ].value = Math.random() * 5;
