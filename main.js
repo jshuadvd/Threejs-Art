@@ -110,7 +110,6 @@ for (var i = 0; i < particleCount; i++) {
         particle = new THREE.Vector3(pX, pY, pZ);
     particles.vertices.push(particle);
 }
-
 particleSystem = new THREE.ParticleSystem(particles, pMaterial);
 particleSystem.sortParticles = false;
 particleSystem.frustumCulled = false;
