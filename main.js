@@ -29,7 +29,6 @@ console.log(frequencyData);
 console.log(analyser);
 console.log(analyser.fftSize); // 2048 by default
 console.log(analyser.frequencyBinCount); // will give me 1024 data points
-
 analyser.fftSize = 64;
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
 
