@@ -9,6 +9,7 @@ var composer, effect, clock;
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
 
+
 audio.play();
 audio.volume = 1;
 audio.crossOrigin = "anonymous";
