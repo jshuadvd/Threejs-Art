@@ -31,7 +31,6 @@ console.log(analyser.frequencyBinCount); // will give me 1024 data points
 analyser.fftSize = 64;
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
 
-
 /* ==================== [ Set Scene & Camera ] ==================== */
 
 scene = new THREE.Scene();
