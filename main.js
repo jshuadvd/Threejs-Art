@@ -434,6 +434,7 @@ var render = function () {
 	if (audioSrc.context.currentTime > 214) {
 		mirror.enabled = false;
 	}
+	console.log(audioSrc);
 	// var songTimes = [16.0, 48.0, 80.0, 112.0, 144.0, 160.0];
 	// var dotTimes = [17.0, 49.0, 81.0, 113.0, 145.0, 161.0];
 	// // console.log(songTimes.length);
