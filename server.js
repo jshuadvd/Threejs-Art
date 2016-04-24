@@ -2,7 +2,6 @@ var express = require('express');
 // var cors = require('cors');
 var path = require('path');
 var bodyParser = require('body-parser');
-
 var app = express();
 
 var port = process.env.PORT || 8000;
@@ -18,6 +17,7 @@ app.use(function(req, res, next) {
 
 app.options(/.*/, function(req, res) {
     res.removeHeader('Content-Type');
+    // Write Headers and Inject CORS as well!
     res.writeHead(200, {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',

@@ -8,7 +8,6 @@ var composer, effect, clock;
 
 var ctx = new AudioContext();
 var audio = document.getElementById('player');
-
 audio.play();
 audio.volume = 1;
 audio.crossOrigin = "anonymous";
@@ -29,10 +28,8 @@ console.log(frequencyData);
 console.log(analyser);
 console.log(analyser.fftSize); // 2048 by default
 console.log(analyser.frequencyBinCount); // will give me 1024 data points
-
 analyser.fftSize = 64;
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
-
 
 /* ==================== [ Set Scene & Camera ] ==================== */
 
@@ -75,6 +72,8 @@ scene.add(pointLight2);
 
 /* ==================== [ Particles ] ==================== */
 
+/* ==================== [ Need to Effect Be Certain, CORS doesn't Effect Images ] ==================== */
+
 var getCamera = function() {
 	return camera;
 }
@@ -109,7 +108,6 @@ for (var i = 0; i < particleCount; i++) {
         particle = new THREE.Vector3(pX, pY, pZ);
     particles.vertices.push(particle);
 }
-
 particleSystem = new THREE.ParticleSystem(particles, pMaterial);
 particleSystem.sortParticles = false;
 particleSystem.frustumCulled = false;
@@ -140,9 +138,7 @@ beamGroup.translateZ( -5 );
 /* ==================== [ Cubes ] ==================== */
 
 
-
 /* ==================== [ Mini Geometries ] ==================== */
-
 
 
 /* ==================== [ Post Processing ] ==================== */
@@ -175,7 +171,6 @@ var mirror = mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
 // mirror.uniforms[ "side" ].value = 3;
 mirror.enabled = false;
 composer.addPass(mirror);
-
 
 var glitch = new THREE.GlitchPass(64);
 glitch.uniforms[ "tDiffuse" ].value = 1.0;
@@ -418,7 +413,10 @@ var render = function () {
 	}
 
 	// var mirrorTimes = [32.0, 96.0, 136.0, 214.0];
-
+	// CAN RENDER THE AUDIO DATA HERE
+	// NOW NEED TO DETERMINE HOW TO MAP SAID DATA
+	// TO SHAPES AND GEOMETRIES
+	
 	analyser.getByteFrequencyData(frequencyData);
 	console.log(frequencyData)
 
@@ -447,7 +445,6 @@ var render = function () {
 	// 	}
 	// 	//console.log(songTimes[i]);
 	// }
-
 	// console.log(audioSrc.context.currentTime);
 stats.update();
 }
