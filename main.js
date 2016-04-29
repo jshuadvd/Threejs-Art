@@ -17,6 +17,7 @@ var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
 audioSrc.connect(analyser);
+
 audioSrc.connect(ctx.destination);
 
 // frequencyBinCount tells you how many values you'll receive from the analyser
