@@ -1,5 +1,6 @@
 /* ==================== [ Global Variables ] ==================== */
 
+
 var scene, camera, renderer, aspectRatio;
 var stats;
 var composer, effect, clock;
