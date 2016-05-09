@@ -1,5 +1,5 @@
 var express = require('express');
-// var cors = require('cors');
+var cors = require('cors');
 var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
