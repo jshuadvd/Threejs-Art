@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+
 app.options(/.*/, function(req, res) {
     res.removeHeader('Content-Type');
     // Write Headers and Inject CORS as well!
