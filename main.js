@@ -24,7 +24,6 @@ var frequencyData = new Uint8Array(24);
 analyser.getByteFrequencyData(frequencyData);
 analyser.fftSize = 64;
 
-
 console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
 console.log(frequencyData);
