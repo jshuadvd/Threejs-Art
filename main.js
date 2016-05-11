@@ -22,6 +22,8 @@ audioSrc.connect(ctx.destination);
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(24);
 analyser.getByteFrequencyData(frequencyData);
+analyser.fftSize = 64;
+
 
 console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
@@ -29,7 +31,6 @@ console.log(frequencyData);
 console.log(analyser);
 console.log(analyser.fftSize); // 2048 by default
 console.log(analyser.frequencyBinCount); // will give me 1024 data points
-analyser.fftSize = 64;
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
 
 /* ==================== [ Set Scene & Camera ] ==================== */
