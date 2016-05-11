@@ -21,7 +21,8 @@ audioSrc.connect(ctx.destination);
 
 // frequencyBinCount tells you how many values you'll receive from the analyser
 var frequencyData = new Uint8Array(24);
-// analyser.getByteFrequencyData(frequencyData);
+analyser.getByteFrequencyData(frequencyData);
+
 
 console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
