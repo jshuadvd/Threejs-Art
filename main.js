@@ -23,7 +23,6 @@ audioSrc.connect(ctx.destination);
 var frequencyData = new Uint8Array(24);
 analyser.getByteFrequencyData(frequencyData);
 
-
 console.log(audioSrc);
 console.log(audioSrc.context.currentTime);
 console.log(frequencyData);
