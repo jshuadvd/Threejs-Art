@@ -13,7 +13,6 @@ audio.play();
 audio.volume = 1;
 audio.crossOrigin = "anonymous";
 
-
 var audioSrc = ctx.createMediaElementSource(audio);
 var analyser = ctx.createAnalyser();
 
