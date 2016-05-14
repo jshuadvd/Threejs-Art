@@ -412,7 +412,6 @@ var render = function () {
 		plane.position.z += plane.position.dz;
 		if (plane.position.y < 0) plane.position.y += 500;
 	}
-
 	// var mirrorTimes = [32.0, 96.0, 136.0, 214.0];
 	// CAN RENDER THE AUDIO DATA HERE
 	// NOW NEED TO DETERMINE HOW TO MAP SAID DATA
