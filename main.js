@@ -30,7 +30,6 @@ console.log(analyser.frequencyBinCount); // will give me 1024 data points
 console.log(analyser.frequencyBinCount); // fftSize/2 = 32 data points
 
 /* ==================== [ Set Scene & Camera ] ==================== */
-
 scene = new THREE.Scene();
 // scene.fog = new THREE.Fog(0x000000, 0, 1200);
 aspectRatio = window.innerWidth / window.innerHeight;
