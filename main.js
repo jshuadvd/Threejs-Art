@@ -205,7 +205,6 @@ composer.addPass(effect1)
 clock = new THREE.Clock;
 
 /* ==================== [ Confetti ] ==================== */
-
 var leaves = 10000;
 var planes = [];
 
