@@ -45,7 +45,6 @@ renderer.setClearColor("#000000");
 document.body.appendChild(renderer.domElement);
 
 /* ==================== [ Camera Position ] ==================== */
-
 camera.position.z = 15;
 camera.position.y = 0;
 
